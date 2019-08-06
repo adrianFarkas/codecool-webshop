@@ -3,7 +3,7 @@
 <body>
 
 <div th:fragment="filter">
-   <form action="/" method="get">
+   <form action="/" method="post">
     <select name="categories">
         <option value="-1">Categories</option>
         <option th:each="cat : ${category}"
