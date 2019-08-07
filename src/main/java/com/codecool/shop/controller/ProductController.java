@@ -2,11 +2,13 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.model.Order;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -21,6 +23,8 @@ import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
+    private Integer USER_ID = 2;
+    private int cartSize = 0;
     private int filterSuppId = -1;
     private int filterCatId = -1;
 
@@ -30,6 +34,8 @@ public class ProductController extends HttpServlet {
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDaoMem supplierDaoMem = SupplierDaoMem.getInstance();
 
+        setCartSize();
+
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("category", productCategoryDataStore.getAll());
@@ -37,6 +43,7 @@ public class ProductController extends HttpServlet {
         context.setVariable(("suppliers"), supplierDaoMem.getAll());
         context.setVariable("filterCatId", req.getParameter("categories"));
         context.setVariable("filterSupptId", req.getParameter("suppliers"));
+        context.setVariable("cartSize", cartSize);
         // // Alternative setting of the template context
         // Map<String, Object> params = new HashMap<>();
         // params.put("category", productCategoryDataStore.find(1));
@@ -50,6 +57,11 @@ public class ProductController extends HttpServlet {
         doGet(req,resp);
     }
 
+    private void setCartSize() {
+        Order cart = null;
+        if (USER_ID != null) cart = OrderDaoMem.getInstance().getActualOrderByUser(USER_ID);
+        if(cart != null) cartSize = cart.getProductsNumber();
+    }
 
     private void setFilterID(HttpServletRequest req){
         try {
@@ -75,5 +87,4 @@ public class ProductController extends HttpServlet {
             return filteredList;
         return filteredList.stream().filter(t -> t.getSupplier().equals(supplierDaoMem.find(filterSuppId))).collect(Collectors.toList());
     }
-
 }

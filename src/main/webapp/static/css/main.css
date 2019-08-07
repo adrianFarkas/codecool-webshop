@@ -1,0 +1,43 @@
+.fa-stack[data-count]:after{
+    position:absolute;
+    right: 0;
+    top:0;
+    content: attr(data-count);
+    font-size:40%;
+    padding:.6em;
+    border-radius:999px;
+    line-height:.75em;
+    color:#aaaaaa;
+    text-align:center;
+    min-width:2em;
+    font-weight:bold;
+    background: white;
+    border-style:solid;
+}
+.fa-circle {
+    color:#cccccc;
+}
+
+.cart {
+    color: #cccccc;
+    background:white;
+}
+
+.shopping_cart {
+    display: flex;
+    justify-content: flex-end;
+    margin: -15px 20px 20px auto;
+}
+
+.card {
+    margin-bottom: 15px;
+}
+
+.jumbotron {
+    background-image: url("/static/img/header.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    color: #d2d2d2;
+    text-shadow: 2px 2px 6px #000000;
+}
