@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="filter">
+   <form action="/" method="post">
+    <select name="categories">
+        <option value="-1">Categories</option>
+        <option th:each="cat : ${category}"
+                th:value="${cat.id}"
+                th:utext="${cat.name}"
+                th:selected="${cat.getId()==filterCatId}"/>
+    </select>
+
+    <select name="suppliers">
+        <option value="-1">Suppliers</option>
+        <option th:each="supp : ${suppliers}"
+                th:value="${supp.id}"
+                th:utext="${supp.name}"
+                th:selected="${supp.getId()==filterSupptId}"/>
+    </select>
+       <button type="submit">Search</button>
+   </form>
+</div>
+
+</body>
+</html>
