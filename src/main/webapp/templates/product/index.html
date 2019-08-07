@@ -26,6 +26,9 @@
     <!-- End of Bootstrap components -->
 
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+    <script type="module" src="/static/js/main.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -33,6 +36,8 @@
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
 </div>
+
+<div th:replace="shopping_cart_icon.html :: cart"></div>
 
 <div class="container">
     <div class="card">
@@ -52,7 +57,7 @@
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                     </div>
                     <div class="card-text">
-                        <a class="btn btn-success" href="#">Add to cart</a>
+                        <button type="button" class="btn btn-success add-to-cart" th:data-item-id="${prod.id}">Add to cart</button>
                     </div>
                 </div>
             </div>
