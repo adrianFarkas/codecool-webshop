@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Codecool" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Codecool Shop</title>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+    <script type="module" src="/static/js/main.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+<div class="jumbotron text-center">
+    <h1>Codecool Shop</h1>
+</div>
+
+<div class="checkout-container">
+<form action="/checkout" method="post">
+    <table class="checkout-table">
+        <tr>
+            <td class="checkout-td-label">Name </td><td class="checkout-td-label">Email</td>
+        </tr>
+        <tr >
+            <td class="checkout-td-input"><input type="text" name="name" class="checkout-input-field"></td><td class="checkout-td-input"><input type="text" name="email" class="checkout-input-field"></td>
+        </tr>
+        <tr>
+            <td class="checkout-td-label">Phone number </td><td></td>
+        </tr>
+        <tr >
+            <td class="checkout-td-input"><input type="text" name="phone" class="checkout-input-field"></td><td></td>
+        </tr>
+    </table>
+<div class="checkout-billing-address">
+    <table>
+        <tr>
+            <td class="checkout-td-label"><p class="billing-address-label">Billing Address </p></td>
+        </tr>
+        <tr >
+            <td class="checkout-td-label">Country</td>
+        </tr>
+        <tr >
+            <td class="checkout-td-input" sclass="checkout-input-field"><input type="text" name="billing-country"></td>
+        </tr>
+        <tr >
+            <td class="checkout-td-label">City </td>
+        </tr>
+        <tr>
+            <td class="checkout-td-input"><input type="text" name="billing-city" class="checkout-input-field"></td>
+        </tr>
+        <tr>
+            <td class="checkout-td-label">Zipcode </td>
+        </tr>
+        <tr >
+            <td class="checkout-td-input"><input type="text" name="billing-zipcode" class="checkout-input-field"></td>
+        </tr>
+        <tr>
+            <td class="checkout-td-label">Address </td>
+        </tr>
+        <tr >
+            <td class="checkout-td-input"><input type="text" name="billing-address" class="checkout-input-field"></td>
+        </tr>
+    </table></div>
+    <div><input type="checkbox" class="teszt2" value="teszt222"></div>
+    <div class="checkout-shipping-address">
+    <table>
+        <tr>
+           <td class="checkout-td-label"><p class="shipping-address-label">Shipping Address </p></td>
+        </tr>
+        <tr >
+            <td class="checkout-td-label">Country</td>
+        </tr>
+        <tr >
+            <td class="checkout-td-input"><input type="text" name="shipping-country" class="checkout-input-field"></td>
+        </tr>
+        <tr >
+            <td class="checkout-td-label">City</td>
+        </tr>
+        <tr>
+            <td class="checkout-td-input"><input type="text" name="shipping-city" class="checkout-input-field"></td>
+        </tr>
+        <tr>
+            <td class="checkout-td-label">Zipcode</td>
+        </tr>
+        <tr >
+            <td class="checkout-td-input"><input type="text" name="shipping-zipcode" class="checkout-input-field"></td>
+        </tr>
+        <tr>
+            <td class="checkout-td-label">Address</td>
+        </tr>
+        <tr >
+           <td class="checkout-td-input"><input type="text" name="shipping-address" class="checkout-input-field"></td>
+        </tr>
+
+
+    </table>
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
+</div>
+<div th:replace="footer.html :: copy"></div>
+
+</body>
+</html>
