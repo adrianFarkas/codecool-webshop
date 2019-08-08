@@ -24,6 +24,7 @@ export let dom = {
         let inputs = document.querySelectorAll('.quantity-num');
         for(let input of inputs) {
             input.addEventListener('click', dom.handleQuantityValue);
+            input.addEventListener('keyup', dom.handleQuantityValue);
         }
     },
     addEventToItems: function() {
