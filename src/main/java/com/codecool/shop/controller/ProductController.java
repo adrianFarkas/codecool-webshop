@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
     private Integer USER_ID = 2;
-    private int cartSize = 0;
+    private int cartSize;
     private int filterSuppId = -1;
     private int filterCatId = -1;
 
@@ -59,8 +59,11 @@ public class ProductController extends HttpServlet {
 
     private void setCartSize() {
         Order cart = null;
+
         if (USER_ID != null) cart = OrderDaoMem.getInstance().getActualOrderByUser(USER_ID);
+
         if(cart != null) cartSize = cart.getProductsNumber();
+        else cartSize = 0;
     }
 
     private void setFilterID(HttpServletRequest req){
@@ -78,6 +81,7 @@ public class ProductController extends HttpServlet {
     }
 
     private List<Product> filterProducts(ProductCategoryDao productCategoryDataStore, ProductDao productDataStore, SupplierDaoMem supplierDaoMem){
+
         List<Product> filteredList;
         if (filterCatId==-1){
             filteredList = productDataStore.getAll();

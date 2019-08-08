@@ -24,7 +24,7 @@ public class CheckoutController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         if (OrderDaoMem.getInstance().getActualOrderByUser(USER_ID) != null) {
             WebContext context = new WebContext(req, resp, req.getServletContext());
-            engine.process("checkout.html", context, resp.getWriter());
+            engine.process("/product/checkout.html", context, resp.getWriter());
         } else
             resp.sendRedirect("/");
     }
@@ -33,6 +33,7 @@ public class CheckoutController extends HttpServlet {
         Order order = OrderDaoMem.getInstance().getActualOrderByUser(USER_ID);
         if (order != null) {
             insertUserDataIntoOrder(req, order);
+            resp.sendRedirect("/payment");
         } else
             resp.sendRedirect("/");
 
@@ -63,6 +64,7 @@ public class CheckoutController extends HttpServlet {
             userdata.setShippingAddress(shippingAddress);
         }
         order.setUserdata(userdata);
+        order.checkout();
     }
 
 }
