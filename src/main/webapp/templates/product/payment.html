@@ -33,8 +33,9 @@
 
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <!------ Include the above in your HEAD tag ---------->
+
     <div class="jumbotron text-center">
         <h1>Codecool Shop</h1>
     </div>
@@ -129,23 +130,20 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <button type="submit" class="btn btn-primary btn-submit-fix">Confirm payment</button>
+                                    <button type="submit" class="btn btn-primary btn-submit-fix">Confirm payment
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!--REVIEW ORDER END-->
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6">
-                    <!--SHIPPING METHOD-->
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             Review Order
-                            <div class="pull-right"><small><a class="afix-1" href="#">Edit Cart</a></small></div>
+                            <div></div>
                         </div>
                         <div class="panel-body">
-
-
                             <div class="form-group" th:each="item: ${items}">
                                 <div class="col-sm-3 col-xs-3">
                                     <img src="http://placehold.it/100x100"
@@ -174,16 +172,10 @@
                                 </div>
                             </div>
                         </div>
+                            <a href="/checkout" class="btn btn-warning col-md-5 checkout-button"><i class="fa fa-angle-left"></i> Back
+                                to checkout</a>
                     </div>
-                    <!--REVIEW ORDER END-->
-
-
-                    <!--SHIPPING METHOD END-->
-                    <!--CREDIT CART PAYMENT-->
-
-                    <!--CREDIT CART PAYMENT END-->
                 </div>
-
             </form>
         </div>
         <div class="row cart-footer">

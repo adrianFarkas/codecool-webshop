@@ -22,4 +22,20 @@ public class Address {
     public void setAddress(String address) {
         Address = address;
     }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public int getZipCode() {
+        return zipCode;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
 }

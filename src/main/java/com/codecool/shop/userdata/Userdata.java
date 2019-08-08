@@ -27,4 +27,24 @@ public class Userdata {
     public void setShippingAddress(Address shippingAddress) {
         this.shippingAddress = shippingAddress;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public Address getBillingAddress() {
+        return billingAddress;
+    }
+
+    public Address getShippingAddress() {
+        return shippingAddress;
+    }
 }

@@ -54,17 +54,17 @@
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <strong>Name:</strong>
-                                    <input type="text" name="name" class="form-control" value=""/>
+                                    <input type="text" name="name" class="form-control" th:value="${userdata.getName()}"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-12"><strong>Email Address:</strong></div>
                                 <div class="col-md-12"><input type="text" name="email_address" class="form-control"
-                                                              value="" required/></div>
+                                                              th:value="${userdata.getEmail()}" required/></div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-12"><strong>Phone Number:</strong></div>
-                                <div class="col-md-12"><input type="text" name="phone_number" class="form-control"
+                                <div class="col-md-12"><input type="text" name="phone_number" class="form-control" th:value="${userdata.getPhoneNumber()}">
                                 </div>
                                 <div class="col-md-12"><br>
                                     <h4>Billing Address</h4>
@@ -72,27 +72,27 @@
                                 <div class="form-group">
                                     <div class="col-md-12"><strong>Country:</strong></div>
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control" name="billing-country" value=""
+                                        <input type="text" class="form-control" name="billing-country" th:value="${userdata.getBillingAddress().getCountry()}"
                                                required/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-12"><strong>City:</strong></div>
                                     <div class="col-md-12">
-                                        <input type="text" name="billing-city" class="form-control" value="" required/>
+                                        <input type="text" name="billing-city" class="form-control" th:value="${userdata.getBillingAddress().getCity()}" required/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-12"><strong>Zip / Postal Code:</strong></div>
                                     <div class="col-md-12">
-                                        <input type="number" name="billing-zipcode" class="form-control" value=""
+                                        <input type="number" name="billing-zipcode" class="form-control" th:value="${userdata.getBillingAddress().getZipCode()}"
                                                required/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-12"><strong>Address:</strong></div>
                                     <div class="col-md-12">
-                                        <input type="text" name="billing-address" class="form-control" value=""
+                                        <input type="text" name="billing-address" class="form-control" th:value="${userdata.getBillingAddress().getAddress()}"
                                                required/>
                                     </div>
                                 </div>
@@ -110,28 +110,28 @@
                                     <div class="col-md-12"><strong>Country:</strong></div>
                                     <div class="col-md-12">
                                         <input type="text" class="form-control shipping" name="shipping-country"
-                                               value=""
+                                               th:value="${userdata.getShippingAddress().getCountry()}"
                                                required/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-12"><strong>City:</strong></div>
                                     <div class="col-md-12">
-                                        <input type="text" name="shipping-city" class="form-control shipping" value=""/>
+                                        <input type="text" name="shipping-city" class="form-control shipping" th:value="${userdata.getShippingAddress().getCity()}"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-12"><strong>Zip / Postal Code:</strong></div>
                                     <div class="col-md-12">
                                         <input type="number" name="shipping-zipcode" class="form-control shipping"
-                                               value=""/>
+                                               th:value="${userdata.getShippingAddress().getZipCode()}"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-12"><strong>Address:</strong></div>
                                     <div class="col-md-12">
                                         <input type="text" name="shipping-address" class="form-control shipping"
-                                               value=""/>
+                                               th:value="${userdata.getShippingAddress().getAddress()}"/>
                                     </div>
                                 </div>
                             </div>

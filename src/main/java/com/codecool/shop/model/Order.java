@@ -114,4 +114,9 @@ public class Order implements Orderable {
     public void setUserdata(Userdata userdata) {
         this.userdata = userdata;
     }
+
+    public Userdata getUserdata(){
+        return userdata;
+    }
+
 }
