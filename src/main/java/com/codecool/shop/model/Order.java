@@ -1,5 +1,7 @@
 package com.codecool.shop.model;
 
+import com.codecool.shop.userdata.Userdata;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,9 @@ public class Order implements Orderable {
     private List<Product> products = new ArrayList<>();
     private Integer userId;
     private int id;
+    private Userdata userdata;
     private static int ID_COUNTER = 0;
+
 
     private Status status = Status.NEW;
 
@@ -63,4 +67,7 @@ public class Order implements Orderable {
         return status;
     }
 
+    public void setUserdata(Userdata userdata) {
+        this.userdata = userdata;
+    }
 }

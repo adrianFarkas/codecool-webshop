@@ -4,7 +4,7 @@
 
 <div th:fragment="filter">
    <form action="/" method="post">
-    <select name="categories">
+    <select name="categories" class="btn btn-success">
         <option value="-1">Categories</option>
         <option th:each="cat : ${category}"
                 th:value="${cat.id}"
@@ -12,14 +12,14 @@
                 th:selected="${cat.getId()==filterCatId}"/>
     </select>
 
-    <select name="suppliers">
+    <select name="suppliers" class="btn btn-success">
         <option value="-1">Suppliers</option>
         <option th:each="supp : ${suppliers}"
                 th:value="${supp.id}"
                 th:utext="${supp.name}"
                 th:selected="${supp.getId()==filterSupptId}"/>
     </select>
-       <button type="submit">Search</button>
+       <button class="btn btn-success" type="submit">Search</button>
    </form>
 </div>
 
