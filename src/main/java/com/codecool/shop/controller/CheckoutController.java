@@ -49,14 +49,13 @@ public class CheckoutController extends HttpServlet {
     }
 
     private void insertUserDataIntoOrder(HttpServletRequest req, Order order) {
-      //  Userdata userdata = new Userdata();
         Userdata userdata = order.getUserdata();
         userdata.setName(req.getParameter("name"));
         userdata.setEmail(req.getParameter("email_address"));
         userdata.setPhoneNumber(req.getParameter("phone_number"));
 
         Address billingAddress = userdata.getBillingAddress();
-        billingAddress.setAddress(req.getParameter("billing-country"));
+        billingAddress.setAddress(req.getParameter("billing-address"));
         billingAddress.setCity(req.getParameter("billing-city"));
         billingAddress.setCountry(req.getParameter("billing-country"));
         billingAddress.setZipCode(Integer.parseInt(req.getParameter("billing-zipcode")));
@@ -66,7 +65,7 @@ public class CheckoutController extends HttpServlet {
             userdata.setShippingAddress(billingAddress);
         } else {
             Address shippingAddress = userdata.getShippingAddress();
-            shippingAddress.setAddress(req.getParameter("shipping-country"));
+            shippingAddress.setAddress(req.getParameter("shipping-address"));
             shippingAddress.setCity(req.getParameter("shipping-city"));
             shippingAddress.setCountry(req.getParameter("shipping-country"));
             shippingAddress.setZipCode(Integer.parseInt(req.getParameter("shipping-zipcode")));
