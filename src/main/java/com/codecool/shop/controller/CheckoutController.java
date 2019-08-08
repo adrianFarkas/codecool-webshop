@@ -64,6 +64,7 @@ public class CheckoutController extends HttpServlet {
             userdata.setShippingAddress(shippingAddress);
         }
         order.setUserdata(userdata);
+        order.checkout();
     }
 
 }
