@@ -78,3 +78,33 @@
     margin-bottom: 20px;
 }
 
+
+.billing-address-label, .shipping-address-label{
+    font-weight: bold;
+}
+
+.checkout-input-field {
+    width: 400px;
+}
+
+.checkout-input {
+    margin-bottom: 15px;
+}
+.checkout-label{
+    margin-bottom: 5px;
+}
+
+.checkout-shipping-address{
+    font-size: large;
+    width:100%
+}
+
+.checkout-main-user-data, .checkout-billing-address, .checkout-shipping-address{
+    margin: auto;
+
+}
+
+.checkout-button {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}

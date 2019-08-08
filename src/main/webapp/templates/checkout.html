@@ -27,7 +27,10 @@
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- End of Bootstrap components -->
 
-    <link rel="stylesheet" type="text/css" href="/static/css/checkout.css"/>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
     <script type="module" src="/static/js/main.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -62,84 +65,91 @@
                             <div class="form-group">
                                 <div class="col-md-12"><strong>Phone Number:</strong></div>
                                 <div class="col-md-12"><input type="text" name="phone_number" class="form-control"
-                            </div>
-                            <div class="col-md-12"><br>
-                                <h4>Billing Address</h4>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12"><strong>Country:</strong></div>
-                                <div class="col-md-12">
-                                    <input type="text" class="form-control" name="billing-country" value="" required/>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12"><strong>City:</strong></div>
-                                <div class="col-md-12">
-                                    <input type="text" name="billing-city" class="form-control" value="" required/>
+                                <div class="col-md-12"><br>
+                                    <h4>Billing Address</h4>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12"><strong>Zip / Postal Code:</strong></div>
-                                <div class="col-md-12">
-                                    <input type="number" name="billing-zipcode" class="form-control" value="" required/>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>Country:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" name="billing-country" value=""
+                                               required/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12"><strong>Address:</strong></div>
-                                <div class="col-md-12">
-                                    <input type="text" name="billing-address" class="form-control" value="" required/>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>City:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="text" name="billing-city" class="form-control" value="" required/>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>Zip / Postal Code:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="number" name="billing-zipcode" class="form-control" value=""
+                                               required/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>Address:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="text" name="billing-address" class="form-control" value=""
+                                               required/>
+                                    </div>
+                                </div>
 
-                            <div class="col-md-12"><input type="checkbox" name="cb" class="checkout-checkbox" checked>Shipping
-                                address is the same as my billing address
+                                <div class="col-md-12"><input type="checkbox" name="cb" class="checkout-checkbox"
+                                                              checked>Shipping
+                                    address is the same as my billing address
+                                </div>
+                            </div>
+                            <div class="checkout-shipping-address">
+                                <div class="col-md-12"><br>
+                                    <h4>Shipping Address</h4>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>Country:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control shipping" name="shipping-country"
+                                               value=""
+                                               required/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>City:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="text" name="shipping-city" class="form-control shipping" value=""/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>Zip / Postal Code:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="number" name="shipping-zipcode" class="form-control shipping"
+                                               value=""/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>Address:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="text" name="shipping-address" class="form-control shipping"
+                                               value=""/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="checkout-shipping-address">
-                            <div class="col-md-12"><br>
-                                <h4>Shipping Address</h4>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12"><strong>Country:</strong></div>
-                                <div class="col-md-12">
-                                    <input type="text" class="form-control shipping" name="shipping-country" value=""
-                                           required/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12"><strong>City:</strong></div>
-                                <div class="col-md-12">
-                                    <input type="text" name="shipping-city" class="form-control shipping" value=""/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12"><strong>Zip / Postal Code:</strong></div>
-                                <div class="col-md-12">
-                                    <input type="number" name="shipping-zipcode" class="form-control shipping"
-                                           value=""/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12"><strong>Address:</strong></div>
-                                <div class="col-md-12">
-                                    <input type="text" name="shipping-address" class="form-control shipping" value=""/>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
-                    <div>
-                        <div class="checkout-button">
-                            <a href="/shopping-cart" class="btn btn-warning col-md-2"><i class="fa fa-angle-left"></i>
-                                Back to cart</a>
-                            <button type="submit" name="submit" class="btn btn-success btn-block pull-right col-md-2">
-                                Pay <i class="fa fa-angle-right"></i></button>
-                        </div>
+                </div>
+                <div>
+                    <div class="checkout-button">
+                        <a href="/shopping-cart" class="btn btn-warning col-md-2"><i class="fa fa-angle-left"></i>
+                            Back to cart</a>
+                        <button type="submit" name="submit" class="btn btn-success btn-block pull-right col-md-2">
+                            Pay <i class="fa fa-angle-right"></i></button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+</div>
 </div>
 
 <div th:replace="footer.html :: copy"></div>
