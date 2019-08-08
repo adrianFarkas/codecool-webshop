@@ -22,11 +22,11 @@ public class CheckoutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
-        //  if (OrderDaoMem.getInstance().getActualOrderByUser(USER_ID)!=null) {
-        WebContext context = new WebContext(req, resp, req.getServletContext());
-        engine.process("checkout.html", context, resp.getWriter());
-        //}else
-        //  resp.sendRedirect("/");
+        if (OrderDaoMem.getInstance().getActualOrderByUser(USER_ID) != null) {
+            WebContext context = new WebContext(req, resp, req.getServletContext());
+            engine.process("checkout.html", context, resp.getWriter());
+        } else
+            resp.sendRedirect("/");
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -51,7 +51,7 @@ public class CheckoutController extends HttpServlet {
         billingAddress.setZipCode(Integer.parseInt(req.getParameter("billing-zipcode")));
 
         userdata.setBillingAddress(billingAddress);
-        if (req.getParameter("cb")!=null) {
+        if (req.getParameter("cb") != null) {
             userdata.setShippingAddress(billingAddress);
         } else {
             Address shippingAddress = new Address();
