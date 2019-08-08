@@ -46,37 +46,3 @@
     margin-bottom: 20px;
 }
 
-.checkout-table {
-    width: 50%;
-    margin-left:auto;
-    margin-right:auto;
-}
-
-.checkout-contanier{
-    font-weight: bold;
-}
-
-.checkout-table td {
-    width: 40%;
-}
-
-.checkout-td-input {
-    padding-bottom: 25px;
-}
-
-.checkout-td-label {
-    width: 50%;
-}
-
-.billing-address-label, .shipping-address-label{
-    font-weight: bold;
-}
-
-.checkout-input-field {
-    width: 350px;
-}
-
-.checkout-shipping-address, .checkout-billing-address-address{
-    margin: auto;
-    ali
-}

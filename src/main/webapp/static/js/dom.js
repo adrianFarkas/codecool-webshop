@@ -3,9 +3,12 @@ import {dataHandler} from "./data_handler.js";
 export let dom = {
     init: function () {
         dom.addEventToCartButtons();
-        let a = document.querySelector('.teszt2');
-        if (a!=null)
-        document.querySelector('.teszt2').addEventListener('change', dom.changeVisibility);
+        let a = document.querySelector('.checkout-checkbox');
+        if (a!=null) {
+            document.querySelector('.checkout-checkbox').addEventListener('change', dom.changeVisibility);
+            dom.changeVisibility();
+
+        }
 
     },
     addEventToCartButtons: function () {
@@ -23,13 +26,23 @@ export let dom = {
 
     changeVisibility: function () {
 
-        let g = document.querySelector('.checkout-shipping-address');
-        let x = g.style.display ;
+        let shippingDiv = document.querySelector('.checkout-shipping-address');
 
-    if ( g.style.display ==='none')
-        g.style.display ='block';
-    else
-        g.style.display ='none';
+    if ( shippingDiv.style.display ==='none') {
+        dom.changeInputReguired(true);
+        shippingDiv.style.display = 'block';
+    }
+    else {
+        shippingDiv.style.display = 'none';
+        dom.changeInputReguired(false);
+    }
 
+
+    },
+
+    changeInputReguired: function(mode){
+        let shipping_inputs = document.querySelectorAll(".shipping");
+        for (let shipping_input of shipping_inputs)
+            shipping_input.required = mode;
     }
 };
