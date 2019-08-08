@@ -5,14 +5,16 @@ export let dom = {
         dom.addEventToCartButtons();
         dom.addEventToQuantityInput();
         dom.addEventToItems();
+        dom.addEventToCheckoutCheckbox();
+        dom.changeVisibility();
 
-        let a = document.querySelector('.checkout-checkbox');
-        if (a!=null) {
-            document.querySelector('.checkout-checkbox').addEventListener('change', dom.changeVisibility);
-            dom.changeVisibility();
+    },
+    addEventToCheckoutCheckbox: function(){
+    let a = document.querySelector('.checkout-checkbox');
+    if (a!=null) {
+        document.querySelector('.checkout-checkbox').addEventListener('change', dom.changeVisibility);
 
-        }
-
+    }
     },
     addEventToCartButtons: function () {
         let add_cart_btn = document.querySelectorAll(".add-to-cart");
@@ -42,13 +44,14 @@ export let dom = {
     changeVisibility: function () {
 
         let shippingDiv = document.querySelector('.checkout-shipping-address');
+        let cb = document.querySelector('.checkout-checkbox');
 
-        if (shippingDiv.style.display === 'none') {
-            dom.changeInputReguired(true);
-            shippingDiv.style.display = 'block';
-        } else {
-            shippingDiv.style.display = 'none';
+        if (cb.checked===true) {
             dom.changeInputReguired(false);
+            shippingDiv.style.display = 'none';
+        } else {
+            shippingDiv.style.display = 'block';
+            dom.changeInputReguired(true);
         }
     },
     changeInputReguired: function(mode){

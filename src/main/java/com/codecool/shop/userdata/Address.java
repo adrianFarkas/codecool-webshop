@@ -4,8 +4,17 @@ public class Address {
     private String country;
     private String city;
     private int zipCode;
-    private String Address;
+    private String address;
+    public Address(){
+        this("","",0,"");
+    }
 
+    public Address(String country, String city, int zipCode, String address) {
+        this.country = country;
+        this.city = city;
+        this.zipCode = zipCode;
+        this.address = address;
+    }
 
     public void setCountry(String country) {
         this.country = country;
@@ -20,7 +29,7 @@ public class Address {
     }
 
     public void setAddress(String address) {
-        Address = address;
+        this.address = address;
     }
 
     public String getCountry() {
@@ -36,6 +45,13 @@ public class Address {
     }
 
     public String getAddress() {
-        return Address;
+        return address;
+    }
+
+    public void setAll(String city, String country, int zipCode, String address){
+        this.city = city;
+        this.country = country;
+        this.zipCode = zipCode;
+        this.address = address;
     }
 }
