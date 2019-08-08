@@ -78,6 +78,7 @@ public class ProductController extends HttpServlet {
     }
 
     private List<Product> filterProducts(ProductCategoryDao productCategoryDataStore, ProductDao productDataStore, SupplierDaoMem supplierDaoMem){
+
         List<Product> filteredList;
         if (filterCatId==-1){
             filteredList = productDataStore.getAll();
