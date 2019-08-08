@@ -17,7 +17,15 @@ export let dataHandler = {
             'productId': productId,
         };
         this._api_post('/add-to-cart', data, (response) => {
-            console.log(response);
+            callback(response);
+        })
+    },
+    editCart: function (productId, numOfNewProds, callback) {
+        let data = {
+            'productId': productId,
+            'num': numOfNewProds
+        };
+        this._api_post('/edit-cart', data, (response) => {
             callback(response);
         })
     }

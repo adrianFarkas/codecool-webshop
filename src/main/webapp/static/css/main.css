@@ -23,7 +23,7 @@
     background:white;
 }
 
-.shopping_cart {
+.shopping_cart_icon {
     display: flex;
     justify-content: flex-end;
     margin: -15px 20px 20px auto;
@@ -40,6 +40,38 @@
     background-size: 100% 100%;
     color: #d2d2d2;
     text-shadow: 2px 2px 6px #000000;
+}
+
+.footer {
+    margin-top: 100px;
+}
+
+.empty-cart {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: black;
+}
+
+.img-responsive {
+    width: 100px;
+    height: 100px;
+}
+
+.product {
+    width: 50%;
+}
+
+.quantity {
+    width: 8%;
+}
+
+.price, .edit {
+    width: 10%;
+}
+
+.subtotal {
+    width: 22%;
 }
 
 .filter {
