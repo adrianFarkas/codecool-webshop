@@ -27,30 +27,22 @@ public class ShoppingCartController extends HttpServlet {
         OrderDaoMem orderDataStore = OrderDaoMem.getInstance();
 
         Order order = orderDataStore.getActualOrderByUser(USER_ID);
-        Map<Product, Integer> lineItem= new HashMap<>();
+        Map<Product, Integer> lineItem = new HashMap<>();
+        float total = 0;
+
 
         if(order != null) {
-            for (Product prod : order.getProducts()) {
-                if (isInLineItem(prod, lineItem)) {
-                    Integer productNum = lineItem.get(prod);
-                    lineItem.put(prod, productNum + 1);
-                } else {
-                    lineItem.put(prod, 1);
-                }
-            }
+            lineItem = order.getProductsPartitionByNum();
+            total = order.getTotalPrice();
         }
 
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("items", lineItem);
+        context.setVariable("total", total);
 
         engine.process("product/shopping-cart.html", context, resp.getWriter());
     }
-
-    private Boolean isInLineItem(Product product, Map<Product, Integer> items)  {
-        return items.containsKey(product);
-    }
-
 }
 
