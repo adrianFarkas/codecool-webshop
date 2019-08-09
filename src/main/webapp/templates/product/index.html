@@ -37,9 +37,9 @@
     <h1>Codecool Shop</h1>
 </div>
 
-<div th:replace="shopping_cart_icon.html :: cart"></div>
 
 <div class="container">
+    <div th:replace="shopping_cart_icon.html :: cart"></div>
     <div class="filter">
         <div th:replace="filter.html :: filter"></div>
     </div>
@@ -62,6 +62,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="card" th:if="${products.isEmpty()}">
+        Sorry, your search did not match any products. Please try again.
     </div>
 
 </div>

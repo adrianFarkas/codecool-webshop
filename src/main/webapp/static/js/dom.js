@@ -79,7 +79,7 @@ export let dom = {
     },
     handleQuantityValue: function (e) {
         let value = e.target.value;
-        if(parseInt(value) < 1) {
+        if(parseInt(value) < 1 || e.key === "e") {
             e.target.value = 1;
         }
     },

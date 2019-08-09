@@ -7,7 +7,7 @@
     padding:.6em;
     border-radius:999px;
     line-height:.75em;
-    color:#aaaaaa;
+    color: #3e7c3e;
     text-align:center;
     min-width:2em;
     font-weight:bold;
@@ -15,18 +15,17 @@
     border-style:solid;
 }
 .fa-circle {
-    color:#cccccc;
+    color:#5cb85c;
 }
 
 .cart {
-    color: #cccccc;
+    color: #5cb85c;
     background:white;
 }
 
 .shopping_cart_icon {
     display: flex;
     justify-content: flex-end;
-    margin: -15px 20px 20px auto;
 }
 
 .card {
@@ -41,6 +40,9 @@
     color: #d2d2d2;
     text-shadow: 2px 2px 6px #000000;
 }
+.jumbotron h1 {
+    font-size: 40px;
+}
 
 .footer {
     margin-top: 100px;
@@ -48,7 +50,7 @@
 
 .empty-cart {
     text-align: center;
-    font-size: 40px;
+    font-size: 22px;
     font-weight: bold;
     color: black;
 }
@@ -108,3 +110,5 @@
     margin-bottom: 20px;
     margin-top: 20px;
 }
+
+
