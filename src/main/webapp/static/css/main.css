@@ -95,7 +95,7 @@
 }
 
 .checkout-shipping-address{
-    font-size: large;
+    font-size: unset;
     width:100%
 }
 

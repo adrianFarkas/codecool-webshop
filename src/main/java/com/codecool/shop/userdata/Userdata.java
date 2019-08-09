@@ -7,6 +7,21 @@ public class Userdata {
     private Address billingAddress;
     private Address shippingAddress;
 
+    public Userdata() {
+    this("","","");
+    }
+
+    public Userdata(String name, String email, String phoneNumber) {
+        this(name, email, phoneNumber, new Address(), new Address());
+    }
+
+    public Userdata(String name, String email, String phoneNumber, Address billingAddress, Address shippingAddress) {
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.billingAddress = billingAddress;
+        this.shippingAddress = shippingAddress;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -46,5 +61,11 @@ public class Userdata {
 
     public Address getShippingAddress() {
         return shippingAddress;
+    }
+
+    public void setAttributes(String name, String email, String phoneNumber){
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
     }
 }
