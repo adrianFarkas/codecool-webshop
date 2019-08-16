@@ -7,7 +7,15 @@ export let dom = {
         dom.addEventToItems();
         dom.addEventToCheckoutCheckbox();
         dom.changeVisibility();
+        dom.addEventToUserLoginLogout();
+        dom.showLoggedIn();
 
+
+    },
+    addEventToUserLoginLogout: function(){
+        document.querySelector('#logout').addEventListener('click', dom.logout);
+        document.querySelector('#login').addEventListener('click', dom.login);
+        document.querySelector('#register').addEventListener('click', dom.register);
     },
     addEventToCheckoutCheckbox: function(){
     let a = document.querySelector('.checkout-checkbox');
@@ -46,12 +54,14 @@ export let dom = {
         let shippingDiv = document.querySelector('.checkout-shipping-address');
         let cb = document.querySelector('.checkout-checkbox');
 
-        if (cb.checked===true) {
-            dom.changeInputReguired(false);
-            shippingDiv.style.display = 'none';
-        } else {
-            shippingDiv.style.display = 'block';
-            dom.changeInputReguired(true);
+        if (cb!=null) {
+            if (cb.checked === true) {
+                dom.changeInputReguired(false);
+                shippingDiv.style.display = 'none';
+            } else {
+                shippingDiv.style.display = 'block';
+                dom.changeInputReguired(true);
+            }
         }
     },
     changeInputReguired: function(mode){
@@ -86,4 +96,71 @@ export let dom = {
             e.target.value = 1;
         }
     },
+    openModal: function (title, button_text, callback) {
+        let form_values = {};
+
+        $('#inputLabel').text(title);
+        $('#inputModal').modal({show: true});
+        $('#submit-button').off();
+        $('#submit-button').text(button_text);
+        $('#submit-button').click(function () {
+            let $inputs = $('#inputForm :input');
+            $inputs.each(function () {
+                form_values[this.name] = $(this).val();
+            });
+            callback(form_values)
+        })
+    },
+    setLoginData: function (results) {
+
+        if (results["success"] === "true") {
+            sessionStorage.setItem('username', results["username"]);
+            sessionStorage.setItem('userid', results["userid"]);
+            dom.showLoggedIn();
+            location.reload();
+        } else {
+            alert(`${results["type"]} failed`);
+
+        }
+    },
+    login: function () {
+        dom.openModal('Login', 'Login', function (form_values) {
+            dataHandler.handleUserAuthentication('/login', form_values, function (results) {
+                dom.setLoginData(results);
+            });
+        });
+    },
+    register: function () {
+
+        dom.openModal('Register', 'Register', function (form_values) {
+            dataHandler.handleUserAuthentication('/register', form_values, function (results) {
+                dom.setLoginData(results);
+            });
+        });
+    },
+    showLoggedIn: function () {
+        let username = sessionStorage.getItem("username");
+        let register = document.querySelector("#register");
+        let login = document.querySelector("#login");
+        let logout = document.querySelector("#logout");
+        let navbar = document.querySelector("#navbar-text");
+        if (username) {
+            navbar.style.display = 'block';
+            navbar.innerText = `Signed in as ${username}`;
+            register.style.display = 'none';
+            login.style.display = 'none';
+            logout.style.display = 'block';
+        } else {
+            navbar.style.display = 'none';
+            register.style.display = 'block';
+            login.style.display = 'block';
+            logout.style.display = 'none';
+        }
+    },
+    logout: function () {
+        if (sessionStorage.getItem("username"))
+            sessionStorage.removeItem("username");
+        sessionStorage.removeItem("userid");
+        location.reload();
+    }
 };
