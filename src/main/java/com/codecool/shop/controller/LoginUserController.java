@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import com.google.gson.Gson;
+import org.mindrot.jbcrypt.BCrypt;
 
 @WebServlet(urlPatterns = {"/login"})
 public class LoginUserController extends HttpServlet {
@@ -27,13 +28,17 @@ public class LoginUserController extends HttpServlet {
         String username = (String)requestData.get("user-name");
         String password = (String)requestData.get("password");
 
-        if ((username.equals("a") && (password.equals("a")))) {
+        if ((username.equals("abcd") && (BCrypt.checkpw(password,"$2a$10$dsZnAfEmXOPFK.CmB5QjCOmoFheKjCaDBJoIkNpi4bOOFYkjuFAeS")))) {
             responseData.put("success", "true");
-            responseData.put("username", "a");
+            responseData.put("username", username);
             responseData.put("userid", "999");
         }
         else
             responseData.put("success", "false");
+//Hash for password a : $2a$10$dsZnAfEmXOPFK.CmB5QjCOmoFheKjCaDBJoIkNpi4bOOFYkjuFAeS
+    //    System.out.println(BCrypt.hashpw("a",BCrypt.gensalt()));
+
+
         responseData.put("type","Login");
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");

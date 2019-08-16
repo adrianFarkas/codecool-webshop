@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import com.google.gson.Gson;
+import org.mindrot.jbcrypt.BCrypt;
 
 @WebServlet(urlPatterns = {"/register"})
 public class RegisterUserController extends HttpServlet {
@@ -26,6 +27,7 @@ public class RegisterUserController extends HttpServlet {
 
         String username = (String)requestData.get("user-name");
         String password = (String)requestData.get("password");
+        String hashedPassword = BCrypt.hashpw(password,BCrypt.gensalt());
 
         if ((username.equals("a") && (password.equals("a"))))
             responseData.put("success", "true");
