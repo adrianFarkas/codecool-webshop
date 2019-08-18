@@ -115,4 +115,14 @@
     padding: 20px;
 }
 
+.modal-content  {
+    -webkit-border-radius: 20px !important;
+    -moz-border-radius:20px !important;
+    border-radius: 20px !important;
+}
 
+.modal-header {
+    border-top-left-radius : 20px !important;
+    border-top-right-radius : 20px !important;
+    color: #fff;
+}

@@ -4,38 +4,47 @@
 
 <div class="usermodal" th:fragment="usermodal">
 
-<div class="modal fade" id="inputModal" tabindex="-1" role="dialog" aria-labelledby="inputLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form id="inputForm" method="POST">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="inputLabel">New message</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="form-group">
-                        <label for="user-name" class="col-form-label">User name:</label>
-                        <input type="text" class="form-control" id="user-name" name="user-name">
+    <div class="modal fade" id="inputModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="background-image: url('https://www.belgotex.com.br/alergia/img/light_grey.png');">
+                <form id="inputForm" method="POST">
+                    <div class="modal-header text-center jumbotron">
+                          <h1 class="modal-title white-text w-100 font-weight-bold py-2" id="inputLabel">New message</h1>
                     </div>
-                    <div class="form-group">
-                        <label for="password" class="col-form-label">Password:</label>
-                        <input type="password" class="form-control" id="password" name="password"></input>
+                <div class="modal-body mx-3">
+                    <div class="md-form mb-5">
+                        <i class="fas fa-user prefix grey-text"></i>
+                        <label data-error="wrong" data-success="right" for="username">Your name</label>
+                        <input type="text" id="username" class="form-control validate" name="username" required>
+
+                    </div>
+                    <div class="md-form mb-5" id ="user-email">
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <label data-error="wrong" data-success="right" for="email">Your email</label>
+                        <input type="email" id="email" class="form-control validate" name="email" required>
+
                     </div>
 
+                    <div class="md-form mb-4">
+                        <i class="fas fa-lock prefix grey-text"></i>
+                        <label data-error="wrong" data-success="right" for="password">Your password</label>
+                        <input type="password" id="password" class="form-control validate" name="password" required>
+
+                    </div>
+                    <div>
+                        <p class="text-danger" id="modalmessage"></p>
+                    </div>
                 </div>
-                <div class="modal-footer">
+
+                <div class="modal-footer d-flex justify-content-center">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" id="submit-button" class="btn btn-primary">Send data</button>
+                    <button type="button" id="submit-button" class="btn btn-success btn-block pull-right col-md-2">Send data</button>
                 </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>
-</div>
-
-
-</body>
-</html>
+    </body>
+    </html>

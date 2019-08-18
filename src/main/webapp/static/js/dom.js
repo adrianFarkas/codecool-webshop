@@ -100,6 +100,11 @@ export let dom = {
         let form_values = {};
 
         $('#inputLabel').text(title);
+        $('#modalmessage').text("");
+        if (button_text==="Login")
+            $('#user-email').css('display', 'none');
+        else
+            $('#user-email').css('display', 'block');
         $('#inputModal').modal({show: true});
         $('#submit-button').off();
         $('#submit-button').text(button_text);
@@ -111,6 +116,28 @@ export let dom = {
             callback(form_values)
         })
     },
+   /* modalValidate: function(){
+
+        $("#inputModal").validate({
+            rules: {
+                pName: {
+                    required: true,
+                    minlength: 8
+                },
+                action: "required";
+                return false;
+            },
+            messages: {
+                pName: {
+                    required: "Please enter some data",
+                    minlength: "Your data must be at least 8 characters"
+                },
+                action: "Please provide some data";
+                return false;
+            }
+        });
+        return true;
+    }*/
     setLoginData: function (results) {
 
         if (results["success"] === "true") {
@@ -119,7 +146,8 @@ export let dom = {
             dom.showLoggedIn();
             location.reload();
         } else {
-            alert(`${results["type"]} failed`);
+            document.querySelector("#modalmessage").innerHTML = `${results["type"]} failed. ${results["message"]}`;
+            //alert(`${results["type"]} failed`);
 
         }
     },
@@ -146,7 +174,7 @@ export let dom = {
         let navbar = document.querySelector("#navbar-text");
         if (username) {
             navbar.style.display = 'block';
-            navbar.innerText = `Signed in as ${username}`;
+            navbar.innerText = `Signed in as <b>${username}</b>`;
             register.style.display = 'none';
             login.style.display = 'none';
             logout.style.display = 'block';
@@ -161,6 +189,9 @@ export let dom = {
         if (sessionStorage.getItem("username"))
             sessionStorage.removeItem("username");
         sessionStorage.removeItem("userid");
+        dataHandler.handleUserAuthentication('/logout', null, function (results) {
+            //dom.setLoginData(results);
+        });
         location.reload();
     }
 };

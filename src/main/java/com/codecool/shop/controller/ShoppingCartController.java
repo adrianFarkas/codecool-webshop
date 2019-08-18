@@ -19,14 +19,15 @@ import java.util.Map;
 @WebServlet(urlPatterns = {"/shopping-cart"})
 public class ShoppingCartController extends HttpServlet {
 
-    Integer USER_ID = 2;
+    //Integer USER_ID = 2;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         OrderDaoMem orderDataStore = OrderDaoMem.getInstance();
 
-        Order order = orderDataStore.getActualOrderByUser(USER_ID);
+
+        Order order = orderDataStore.getActualOrderByUser(SessionController.getInstance().readIntegerAttributeFromSession(req,SessionAttributeName.USER_ID));
         Map<Product, Integer> lineItem = new HashMap<>();
         float total = 0;
 

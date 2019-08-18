@@ -19,12 +19,12 @@ import java.util.Objects;
 
 @WebServlet(urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {
-    private int USER_ID = 2;
+  //  private int USER_ID = 2;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
-        Order order = OrderDaoMem.getInstance().getActualOrderByUser(USER_ID);
+        Order order = OrderDaoMem.getInstance().getActualOrderByUser(SessionController.getInstance().readIntegerAttributeFromSession(req, SessionAttributeName.USER_ID));
         if (order != null) {
             WebContext context = new WebContext(req, resp, req.getServletContext());
             Userdata userdata = order.getUserdata();
@@ -42,7 +42,7 @@ public class CheckoutController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Order order = OrderDaoMem.getInstance().getActualOrderByUser(USER_ID);
+        Order order = OrderDaoMem.getInstance().getActualOrderByUser(SessionController.getInstance().readIntegerAttributeFromSession(req, SessionAttributeName.USER_ID));
         if (order != null) {
             insertUserDataIntoOrder(req, order);
             resp.sendRedirect("/payment");

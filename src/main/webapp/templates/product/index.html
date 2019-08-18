@@ -28,10 +28,12 @@
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
     <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
     <script type="module" src="/static/js/main.js" defer></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
-<body>
+<iv t>
 
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
@@ -42,10 +44,11 @@
 
 
 
-<div th:replace="user_navbar.html :: usernavbar"></div>
+
 <div th:replace="modal.html :: usermodal"></div>
 <div class="container">
-    <div th:replace="shopping_cart_icon.html :: cart"></div>
+    <div th:replace="user_navbar.html :: usernavbar"></div>
+    <div  th:replace="shopping_cart_icon.html :: cart"></div>
     <div class="filter">
         <div th:replace="filter.html :: filter"></div>
     </div>
@@ -62,7 +65,7 @@
                     <div class="card-text">
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                     </div>
-                    <div class="card-text">
+                    <div th:if="${USER_ID != -1}" class="card-text">
                         <button type="button" class="btn btn-success add-to-cart" th:data-item-id="${prod.id}">Add to cart</button>
                     </div>
                 </div>

@@ -19,7 +19,7 @@ import java.util.Map;
 @WebServlet(urlPatterns = {"/edit-cart"})
 public class EditCartController extends HttpServlet {
 
-    private int USER_ID = 2;
+    //private int USER_ID = 2;
 
 
     @Override
@@ -32,7 +32,7 @@ public class EditCartController extends HttpServlet {
 
 
         Product product = ProductDaoMem.getInstance().find(prodId);
-        Order order = OrderDaoMem.getInstance().createOrder(USER_ID);
+        Order order = OrderDaoMem.getInstance().createOrder(SessionController.getInstance().readIntegerAttributeFromSession(req, SessionAttributeName.USER_ID));
 
         Map<Product, Integer> products = order.getProductsPartitionByNum();
         int productNum = products.get(product);

@@ -17,24 +17,26 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
-    private Integer USER_ID = 2;
+    //private Integer USER_ID;
     private int cartSize;
     private int filterSuppId = -1;
     private int filterCatId = -1;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDaoMem supplierDaoMem = SupplierDaoMem.getInstance();
 
-        setCartSize();
+        setCartSize(getUserId(req));
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -44,6 +46,7 @@ public class ProductController extends HttpServlet {
         context.setVariable("filterCatId", req.getParameter("categories"));
         context.setVariable("filterSupptId", req.getParameter("suppliers"));
         context.setVariable("cartSize", cartSize);
+        context.setVariable("USER_ID", getUserId(req));
         // // Alternative setting of the template context
         // Map<String, Object> params = new HashMap<>();
         // params.put("category", productCategoryDataStore.find(1));
@@ -57,7 +60,7 @@ public class ProductController extends HttpServlet {
         doGet(req,resp);
     }
 
-    private void setCartSize() {
+    private void setCartSize(Integer USER_ID) {
         Order cart = null;
 
         if (USER_ID != null) cart = OrderDaoMem.getInstance().getActualOrderByUser(USER_ID);
@@ -90,5 +93,16 @@ public class ProductController extends HttpServlet {
         if (filterSuppId==-1)
             return filteredList;
         return filteredList.stream().filter(t -> t.getSupplier().equals(supplierDaoMem.find(filterSuppId))).collect(Collectors.toList());
+    }
+
+    private Integer getUserId(HttpServletRequest req){
+        HttpSession session = req.getSession();
+        Integer userID=SessionController.getInstance().readIntegerAttributeFromSession(req, SessionAttributeName.USER_ID);
+        System.out.println(userID);
+        System.out.println(session.getAttribute("USER_NAME"));
+        if (userID==null)
+            return -1;
+        return userID;
+
     }
 }

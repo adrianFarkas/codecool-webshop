@@ -18,12 +18,12 @@ import java.util.Map;
 
 @WebServlet(urlPatterns = {"/payment"})
 public class PaymentController extends HttpServlet {
-    private int USER_ID = 2;
+   // private int USER_ID = 2;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         OrderDaoMem orderDataStore = OrderDaoMem.getInstance();
-        Order order = orderDataStore.getActualOrderByUser(USER_ID);
+        Order order = orderDataStore.getActualOrderByUser(SessionController.getInstance().readIntegerAttributeFromSession(req, SessionAttributeName.USER_ID.getAttribute()));
         if (order!=null) {
             Map<Product, Integer> lineItem = new HashMap<>();
             float total = 0;
@@ -43,7 +43,7 @@ public class PaymentController extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         OrderDaoMem orderDataStore = OrderDaoMem.getInstance();
-        Order order = orderDataStore.getActualOrderByUser(USER_ID);
+        Order order = orderDataStore.getActualOrderByUser(SessionController.getInstance().readIntegerAttributeFromSession(req, SessionAttributeName.USER_ID.getAttribute()));
         order.pay();
         resp.sendRedirect("/");
     }
