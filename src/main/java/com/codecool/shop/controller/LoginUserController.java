@@ -64,18 +64,18 @@ public class LoginUserController extends HttpServlet {
     }
 
     private String getUserStoredPasswordFromDB(String username) {
-        if (username.equals("a"))
+        if (username.equals("aaaaaaaa"))
             return "$2a$10$dsZnAfEmXOPFK.CmB5QjCOmoFheKjCaDBJoIkNpi4bOOFYkjuFAeS";
-        else if (username.equals("b"))
+        else if (username.equals("bbbbbbbb"))
             return "$2a$10$06VDqKsZQjZMDjW/v.p30.53BYiBQ2uHUMrd2ouUAt468vn6hes.e";
         else
             return null;
     }
 
     private Integer getUserIdFromDB(String username) {
-        if (username.equals("a"))
+        if (username.equals("aaaaaaaa"))
             return 999;
-        else if (username.equals("b"))
+        else if (username.equals("bbbbbbbb"))
             return 990;
         else
             return -1;

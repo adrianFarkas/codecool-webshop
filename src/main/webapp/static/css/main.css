@@ -126,3 +126,7 @@
     border-top-right-radius : 20px !important;
     color: #fff;
 }
+
+.navbar {
+    border-radius: 30px;
+}

@@ -9,39 +9,64 @@ export let dom = {
         dom.changeVisibility();
         dom.addEventToUserLoginLogout();
         dom.showLoggedIn();
+        dom.addModalValidation();
 
 
     },
-    addEventToUserLoginLogout: function(){
+    addEventToUserLoginLogout: function () {
         document.querySelector('#logout').addEventListener('click', dom.logout);
         document.querySelector('#login').addEventListener('click', dom.login);
         document.querySelector('#register').addEventListener('click', dom.register);
     },
-    addEventToCheckoutCheckbox: function(){
-    let a = document.querySelector('.checkout-checkbox');
-    if (a!=null) {
-        document.querySelector('.checkout-checkbox').addEventListener('change', dom.changeVisibility);
+    addEventToCheckoutCheckbox: function () {
+        let a = document.querySelector('.checkout-checkbox');
+        if (a != null) {
+            document.querySelector('.checkout-checkbox').addEventListener('change', dom.changeVisibility);
 
-    }
+        }
     },
     addEventToCartButtons: function () {
         let add_cart_btn = document.querySelectorAll(".add-to-cart");
-        for(let btn of add_cart_btn) {
+        for (let btn of add_cart_btn) {
             btn.addEventListener('click', dom.addToCart);
         }
     },
-    addEventToQuantityInput: function() {
+    addEventToQuantityInput: function () {
         let inputs = document.querySelectorAll('.quantity-num');
-        for(let input of inputs) {
+        for (let input of inputs) {
             input.addEventListener('click', dom.handleQuantityValue);
             input.addEventListener('keyup', dom.handleQuantityValue);
         }
     },
-    addEventToItems: function() {
+    addEventToItems: function () {
         let items = document.querySelectorAll('.item');
-        for(let item of items) {
+        for (let item of items) {
             item.addEventListener('click', dom.editCart);
         }
+    },
+    addModalValidation: function () {
+        $(document).ready(function () {
+            $("#inputForm").validate({
+                rules: {
+                    username: {
+                        required: true,
+                        minlength: 8
+                    },
+                    password: "required",
+                    email: "required"
+                },
+                messages: {
+                    username: {
+                        required: "Please provide your user name!",
+                        minlength: "Your user name must be at least 8 characters!"
+                    },
+                    password: "Please provide your password!",
+                    email: "Please enter a valid email address!"
+                }
+            });
+        })
+
+
     },
     addToCart: function (event) {
         let prodId = event.target.dataset.itemId;
@@ -54,7 +79,7 @@ export let dom = {
         let shippingDiv = document.querySelector('.checkout-shipping-address');
         let cb = document.querySelector('.checkout-checkbox');
 
-        if (cb!=null) {
+        if (cb != null) {
             if (cb.checked === true) {
                 dom.changeInputReguired(false);
                 shippingDiv.style.display = 'none';
@@ -64,7 +89,7 @@ export let dom = {
             }
         }
     },
-    changeInputReguired: function(mode){
+    changeInputReguired: function (mode) {
         let shipping_inputs = document.querySelectorAll(".shipping");
         for (let shipping_input of shipping_inputs)
             shipping_input.required = mode;
@@ -72,7 +97,7 @@ export let dom = {
     editCart: function (e) {
         let item = e.currentTarget;
         let classList = e.target.classList;
-        if(classList.contains("refresh") || classList.contains("remove")) {
+        if (classList.contains("refresh") || classList.contains("remove")) {
             let input = e.currentTarget.querySelector(".quantity-num");
             let prodId = e.currentTarget.dataset.prodId;
             let newProdsNumber = classList.contains("remove") ? 0 : input.value;
@@ -80,8 +105,8 @@ export let dom = {
             dataHandler.editCart(prodId, newProdsNumber.toString(), function (response) {
                 let newProdPrice = response["prodTotalPrice"];
                 let totalPrice = response["totalPrice"];
-                if(classList.contains("remove")) {
-                    if(item.parentNode.children.length === 1) window.location.reload();
+                if (classList.contains("remove")) {
+                    if (item.parentNode.children.length === 1) window.location.reload();
                     item.remove();
                 }
                 item.querySelector(".subtotal-num").textContent = `$${newProdPrice.toFixed(1)}`;
@@ -92,52 +117,33 @@ export let dom = {
     },
     handleQuantityValue: function (e) {
         let value = e.target.value;
-        if(parseInt(value) < 1 || e.key === "e") {
+        if (parseInt(value) < 1 || e.key === "e") {
             e.target.value = 1;
         }
     },
     openModal: function (title, button_text, callback) {
+
         let form_values = {};
 
         $('#inputLabel').text(title);
         $('#modalmessage').text("");
-        if (button_text==="Login")
+        if (button_text === "Login")
             $('#user-email').css('display', 'none');
         else
             $('#user-email').css('display', 'block');
         $('#inputModal').modal({show: true});
-        $('#submit-button').off();
-        $('#submit-button').text(button_text);
-        $('#submit-button').click(function () {
+        let $submitButton=$('#submit-button');
+        $submitButton.off();
+        $submitButton.text(button_text);
+        $submitButton.click(function () {
             let $inputs = $('#inputForm :input');
             $inputs.each(function () {
                 form_values[this.name] = $(this).val();
             });
             callback(form_values)
         })
-    },
-   /* modalValidate: function(){
 
-        $("#inputModal").validate({
-            rules: {
-                pName: {
-                    required: true,
-                    minlength: 8
-                },
-                action: "required";
-                return false;
-            },
-            messages: {
-                pName: {
-                    required: "Please enter some data",
-                    minlength: "Your data must be at least 8 characters"
-                },
-                action: "Please provide some data";
-                return false;
-            }
-        });
-        return true;
-    }*/
+    },
     setLoginData: function (results) {
 
         if (results["success"] === "true") {
@@ -147,23 +153,25 @@ export let dom = {
             location.reload();
         } else {
             document.querySelector("#modalmessage").innerHTML = `${results["type"]} failed. ${results["message"]}`;
-            //alert(`${results["type"]} failed`);
-
         }
     },
     login: function () {
         dom.openModal('Login', 'Login', function (form_values) {
-            dataHandler.handleUserAuthentication('/login', form_values, function (results) {
-                dom.setLoginData(results);
-            });
-        });
+            if ($("#inputForm").valid()) {
+                dataHandler.handleUserAuthentication('/login', form_values, function (results) {
+                    dom.setLoginData(results);
+                });
+            }
+        })
     },
     register: function () {
 
         dom.openModal('Register', 'Register', function (form_values) {
-            dataHandler.handleUserAuthentication('/register', form_values, function (results) {
-                dom.setLoginData(results);
-            });
+            if ($("#inputForm").valid()) {
+                dataHandler.handleUserAuthentication('/register', form_values, function (results) {
+                    dom.setLoginData(results);
+                });
+            }
         });
     },
     showLoggedIn: function () {
@@ -174,7 +182,7 @@ export let dom = {
         let navbar = document.querySelector("#navbar-text");
         if (username) {
             navbar.style.display = 'block';
-            navbar.innerText = `Signed in as <b>${username}</b>`;
+            navbar.textContent = `Signed in as <b> ${username} </b>`;
             register.style.display = 'none';
             login.style.display = 'none';
             logout.style.display = 'block';
@@ -189,9 +197,7 @@ export let dom = {
         if (sessionStorage.getItem("username"))
             sessionStorage.removeItem("username");
         sessionStorage.removeItem("userid");
-        dataHandler.handleUserAuthentication('/logout', null, function (results) {
-            //dom.setLoginData(results);
-        });
+        dataHandler.handleUserAuthentication('/logout', null, function (results) {});
         location.reload();
     }
-};
+}
