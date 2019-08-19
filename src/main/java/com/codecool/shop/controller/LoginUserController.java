@@ -35,12 +35,9 @@ public class LoginUserController extends HttpServlet {
             responseData.put("success", "true");
             responseData.put("username", username);
             responseData.put("userid", getUserIdFromDB(username).toString());
-            SessionController sessionController = SessionController.getInstance();
-            sessionController.addAttributeToSession(req, SessionAttributeName.USER_ID, getUserIdFromDB(username));
-            sessionController.addAttributeToSession(req, SessionAttributeName.USER_NAME,username);
-           // HttpSession session = req.getSession();
-         //   session.setAttribute("USER_ID", getUserIdFromDB(username));
-         //   session.setAttribute("USER_NAME", username);
+            HttpSession session = req.getSession();
+            session.setAttribute("USER_ID", getUserIdFromDB(username));
+            session.setAttribute("USER_NAME", username);
         } else {
             responseData.put("success", "false");
             responseData.put("message", "Wrong username or password!");

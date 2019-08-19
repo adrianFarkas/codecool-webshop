@@ -27,7 +27,7 @@ public class ShoppingCartController extends HttpServlet {
         OrderDaoMem orderDataStore = OrderDaoMem.getInstance();
 
 
-        Order order = orderDataStore.getActualOrderByUser(SessionController.getInstance().readIntegerAttributeFromSession(req,SessionAttributeName.USER_ID));
+        Order order = orderDataStore.getActualOrderByUser(SessionController.getInstance().readIntegerAttributeFromSession(req,"USER_ID"));
         Map<Product, Integer> lineItem = new HashMap<>();
         float total = 0;
 

@@ -96,10 +96,7 @@ public class ProductController extends HttpServlet {
     }
 
     private Integer getUserId(HttpServletRequest req){
-        HttpSession session = req.getSession();
-        Integer userID=SessionController.getInstance().readIntegerAttributeFromSession(req, SessionAttributeName.USER_ID);
-        System.out.println(userID);
-        System.out.println(session.getAttribute("USER_NAME"));
+        Integer userID=SessionController.getInstance().readIntegerAttributeFromSession(req, "USER_ID");
         if (userID==null)
             return -1;
         return userID;

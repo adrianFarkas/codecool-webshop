@@ -23,7 +23,7 @@ public class PaymentController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         OrderDaoMem orderDataStore = OrderDaoMem.getInstance();
-        Order order = orderDataStore.getActualOrderByUser(SessionController.getInstance().readIntegerAttributeFromSession(req, SessionAttributeName.USER_ID.getAttribute()));
+        Order order = orderDataStore.getActualOrderByUser(SessionController.getInstance().readIntegerAttributeFromSession(req, "USER_ID"));
         if (order!=null) {
             Map<Product, Integer> lineItem = new HashMap<>();
             float total = 0;
@@ -43,7 +43,7 @@ public class PaymentController extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         OrderDaoMem orderDataStore = OrderDaoMem.getInstance();
-        Order order = orderDataStore.getActualOrderByUser(SessionController.getInstance().readIntegerAttributeFromSession(req, SessionAttributeName.USER_ID.getAttribute()));
+        Order order = orderDataStore.getActualOrderByUser(SessionController.getInstance().readIntegerAttributeFromSession(req, "USER_ID"));
         order.pay();
         resp.sendRedirect("/");
     }

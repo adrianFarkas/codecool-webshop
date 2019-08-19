@@ -30,23 +30,16 @@ public class RegisterUserController extends HttpServlet {
         String hashedPassword = BCrypt.hashpw(password,BCrypt.gensalt());
 
 
-      /*  if ((username.equals("a") && (password.equals("a")))) {
-
-            responseData.put("success", "true");
-        }*/
-       if (checkUsernameExists(username))
+       if (checkUsernameExists(username)) {
            responseData.put("success", "false");
+           responseData.put("message", "Username already exists. Please select another!");
+       }
         else {
             //save data to the database
-           SessionController sessionController = SessionController.getInstance();
-           sessionController.addAttributeToSession(req,SessionAttributeName.USER_ID, getUserIdFromDB(username));
-           sessionController.addAttributeToSession(req,SessionAttributeName.USER_NAME,username);
-           responseData.put("success", "true");
            responseData.put("username", username);
            responseData.put("userid", getUserIdFromDB(username).toString());
-
-           //req.getSession().setAttribute("USER_ID", getUserIdFromDB(username));
-           //req.getSession().setAttribute("username", username);
+           req.getSession().setAttribute("USER_ID", getUserIdFromDB(username));
+           req.getSession().setAttribute("USER_NAME", username);
        }
         responseData.put("type","Registration");
         PrintWriter out = resp.getWriter();
@@ -54,17 +47,16 @@ public class RegisterUserController extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         out.write(new Gson().toJson(responseData));
         out.flush();
-        System.out.println("REgister");
     }
 
     //check in database the user name
     private Boolean checkUsernameExists(String username){
-        return username.equals("c") || (username.equals("d"));
+        return username.equals("cccccccc") || (username.equals("d"));
     }
 
     //get user id from database
     private Integer getUserIdFromDB(String username) {
-        if (username.equals("a"))
+        if (username.equals("eeeeeeee"))
             return 999;
         else if (username.equals("b"))
             return 990;

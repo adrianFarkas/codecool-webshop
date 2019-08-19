@@ -32,7 +32,7 @@ public class EditCartController extends HttpServlet {
 
 
         Product product = ProductDaoMem.getInstance().find(prodId);
-        Order order = OrderDaoMem.getInstance().createOrder(SessionController.getInstance().readIntegerAttributeFromSession(req, SessionAttributeName.USER_ID));
+        Order order = OrderDaoMem.getInstance().createOrder(SessionController.getInstance().readIntegerAttributeFromSession(req, "USER_ID"));
 
         Map<Product, Integer> products = order.getProductsPartitionByNum();
         int productNum = products.get(product);

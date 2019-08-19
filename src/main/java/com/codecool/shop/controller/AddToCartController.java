@@ -30,7 +30,7 @@ public class AddToCartController extends HttpServlet {
 
         int productId = Integer.parseInt((String) requestData.get("productId"));
         Product product = ProductDaoMem.getInstance().find(productId);
-        Order order = OrderDaoMem.getInstance().createOrder(SessionController.getInstance().readIntegerAttributeFromSession(req, SessionAttributeName.USER_ID));
+        Order order = OrderDaoMem.getInstance().createOrder(SessionController.getInstance().readIntegerAttributeFromSession(req, "USER_ID"));
         order.addItem(product);
 
         responseData.put("cartSize", order.getProductsNumber());

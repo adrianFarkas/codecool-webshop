@@ -182,7 +182,7 @@ export let dom = {
         let navbar = document.querySelector("#navbar-text");
         if (username) {
             navbar.style.display = 'block';
-            navbar.textContent = `Signed in as <b> ${username} </b>`;
+            navbar.textContent = `Signed in as ${username} `;
             register.style.display = 'none';
             login.style.display = 'none';
             logout.style.display = 'block';
