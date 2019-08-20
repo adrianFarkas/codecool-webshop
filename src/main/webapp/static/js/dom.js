@@ -60,8 +60,6 @@ export let dom = {
                 messages: {
                     username: {
                         required: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Please enter your user name!</span>',
-                        //required: '<i class="fa fa-info-circle text-danger prefix" aria-hidden="true"></i><p class="text-danger">Please provide your user name!"</p>',
-                        //  required: '<p class="text-danger"><b>Please provide your user name!"</b></p>',
                         minlength: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Your user name must be at least 6 characters!</span>'
                     },
                     password: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Please provide your password!</span>',
@@ -165,7 +163,8 @@ export let dom = {
             dom.showLoggedIn();
             location.reload();
         } else {
-            document.querySelector("#modalErrorMessage").innerHTML = `${results["type"]} failed. ${results["message"]}`;
+    //        let errorMessage = `<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i><b> ${results["type"]} failed. ${results["message"]}\</b></span>`
+            dom.showModalErrorMessage(`${results["type"]} failed. ${results["message"]}`);
         }
     },
     login: function () {
@@ -217,10 +216,10 @@ export let dom = {
         let password = document.querySelector("#password").value;
         let password_check = document.querySelector("#password_confirm").value;
         if (password !== password_check) {
-            document.querySelector("#modalErrorMessage").innerHTML = "Passwords not same";
+            dom.showModalErrorMessage("Passwords and confirmation password do not match!");
             return false;
         }
-        document.querySelector("#modalErrorMessage").innerHTML = "";
+        dom.showModalErrorMessage("");
         return true;
     },
     checkStrength: function () {
@@ -307,6 +306,12 @@ export let dom = {
             $passwordStrength.css('width', '100%');
         }
         return passwordOk;
+    },
+    showModalErrorMessage : function (message) {
+        let modalErrorMessageHtml = document.querySelector("#modalErrorMessage");
+        modalErrorMessageHtml.innerHTML = `<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i><b> ${message} </b></span>`;
+
     }
 
 };
+
