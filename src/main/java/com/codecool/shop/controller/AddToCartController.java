@@ -20,9 +20,6 @@ import java.util.Map;
 @WebServlet(urlPatterns = {"/add-to-cart"})
 public class AddToCartController extends HttpServlet {
 
-    //private int USER_ID = 2;
-
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map requestData = new Gson().fromJson(req.getReader(), Map.class);

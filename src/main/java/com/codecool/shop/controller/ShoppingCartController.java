@@ -19,8 +19,6 @@ import java.util.Map;
 @WebServlet(urlPatterns = {"/shopping-cart"})
 public class ShoppingCartController extends HttpServlet {
 
-    //Integer USER_ID = 2;
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

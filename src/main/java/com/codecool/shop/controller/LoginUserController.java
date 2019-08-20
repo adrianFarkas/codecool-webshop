@@ -27,7 +27,6 @@ public class LoginUserController extends HttpServlet {
         Map requestData = new Gson().fromJson(req.getReader(), Map.class);
         Map<String, String> responseData = new HashMap<>();
 
-
         String username = (String) requestData.get("username");
         String password = (String) requestData.get("password");
 
@@ -42,7 +41,6 @@ public class LoginUserController extends HttpServlet {
             responseData.put("success", "false");
             responseData.put("message", "Wrong username or password!");
         }
-
 
         responseData.put("type", "Login");
         PrintWriter out = resp.getWriter();

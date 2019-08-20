@@ -30,9 +30,7 @@ export let dataHandler = {
         })
     },
     handleUserAuthentication: function (url, data, callback) {
-        console.log("Valami");
         this._api_post(url, data, (response) => {
-
         callback(response);
     });
     },

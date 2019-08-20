@@ -10,9 +10,7 @@ export let dom = {
         dom.addEventToUserLoginLogout();
         dom.showLoggedIn();
         dom.addModalValidation();
-        document.querySelector("#password").addEventListener("keyup", dom.checkStrength);
-
-
+        dom.addKeyUoHandlerToModalInputs();
     },
     addEventToUserLoginLogout: function () {
         document.querySelector('#logout').addEventListener('click', dom.logout);
@@ -23,7 +21,6 @@ export let dom = {
         let a = document.querySelector('.checkout-checkbox');
         if (a != null) {
             document.querySelector('.checkout-checkbox').addEventListener('change', dom.changeVisibility);
-
         }
     },
     addEventToCartButtons: function () {
@@ -45,6 +42,9 @@ export let dom = {
             item.addEventListener('click', dom.editCart);
         }
     },
+    addKeyUoHandlerToModalInputs: function () {
+        document.querySelector("#password").addEventListener("keyup", dom.checkStrength);
+    },
     addModalValidation: function () {
         $(document).ready(function () {
 
@@ -59,9 +59,9 @@ export let dom = {
                 },
                 messages: {
                     username: {
-                        required : '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Please enter your user name!</span>',
+                        required: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Please enter your user name!</span>',
                         //required: '<i class="fa fa-info-circle text-danger prefix" aria-hidden="true"></i><p class="text-danger">Please provide your user name!"</p>',
-                      //  required: '<p class="text-danger"><b>Please provide your user name!"</b></p>',
+                        //  required: '<p class="text-danger"><b>Please provide your user name!"</b></p>',
                         minlength: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Your user name must be at least 6 characters!</span>'
                     },
                     password: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Please provide your password!</span>',
@@ -71,8 +71,6 @@ export let dom = {
             });
 
         });
-
-
     },
     addToCart: function (event) {
         let prodId = event.target.dataset.itemId;
@@ -153,9 +151,8 @@ export let dom = {
             });
             callback(form_values)
         })
-
     },
-    setModalForLogin: function(displayType){
+    setModalForLogin: function (displayType) {
         $('#user-email').css('display', displayType);
         $('#user-password_confirm').css('display', displayType);
         $('#popover-password').css('display', displayType);
@@ -181,7 +178,6 @@ export let dom = {
         })
     },
     register: function () {
-
         dom.openModal('Register', 'Register', function (form_values) {
             if (($("#inputForm").valid()) && (dom.checkPasswords()) && dom.checkStrength()) {
                 dataHandler.handleUserAuthentication('/register', form_values, function (results) {
@@ -217,7 +213,6 @@ export let dom = {
         });
         location.reload();
     },
-
     checkPasswords: function () {
         let password = document.querySelector("#password").value;
         let password_check = document.querySelector("#password_confirm").value;
@@ -225,11 +220,8 @@ export let dom = {
             document.querySelector("#modalErrorMessage").innerHTML = "Passwords not same";
             return false;
         }
-
         document.querySelector("#modalErrorMessage").innerHTML = "";
         return true;
-
-
     },
     checkStrength: function () {
         let strength = 0;
@@ -290,11 +282,10 @@ export let dom = {
         let $result = $('#result');
         let $passwordStrength = $('#password-strength');
         let passwordOk = true;
-        if (strength===0){
+        if (strength === 0) {
             $passwordStrength.css('width', '0%');
             return false;
-        }
-        else if (strength < 2) {
+        } else if (strength < 2) {
             $result.removeClass()
             $passwordStrength.addClass('progress-bar-danger');
             $result.addClass('text-danger').text('Very Weak');
@@ -318,4 +309,4 @@ export let dom = {
         return passwordOk;
     }
 
-}
+};

@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
-    //private Integer USER_ID;
     private int cartSize;
     private int filterSuppId = -1;
     private int filterCatId = -1;
