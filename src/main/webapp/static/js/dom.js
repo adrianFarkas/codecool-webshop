@@ -10,6 +10,7 @@ export let dom = {
         dom.addEventToUserLoginLogout();
         dom.showLoggedIn();
         dom.addModalValidation();
+        document.querySelector("#password").addEventListener("keyup", dom.checkStrength);
 
 
     },
@@ -46,6 +47,7 @@ export let dom = {
     },
     addModalValidation: function () {
         $(document).ready(function () {
+
             $("#inputForm").validate({
                 rules: {
                     username: {
@@ -64,7 +66,8 @@ export let dom = {
                     email: "Please enter a valid email address!"
                 }
             });
-        })
+
+        });
 
 
     },
@@ -127,12 +130,20 @@ export let dom = {
 
         $('#inputLabel').text(title);
         $('#modalmessage').text("");
-        if (button_text === "Login")
+        if (button_text === "Login") {
             $('#user-email').css('display', 'none');
-        else
+            $('#user-password_confirm').css('display', 'none');
+            $('#popover-password').css('display', 'none');
+
+        } else {
             $('#user-email').css('display', 'block');
+            $('#user-password_confirm').css('display', 'block');
+            $('#popover-password').css('display', 'block');
+        }
+
+
         $('#inputModal').modal({show: true});
-        let $submitButton=$('#submit-button');
+        let $submitButton = $('#submit-button');
         $submitButton.off();
         $submitButton.text(button_text);
         $submitButton.click(function () {
@@ -144,6 +155,7 @@ export let dom = {
         })
 
     },
+
     setLoginData: function (results) {
 
         if (results["success"] === "true") {
@@ -167,7 +179,7 @@ export let dom = {
     register: function () {
 
         dom.openModal('Register', 'Register', function (form_values) {
-            if ($("#inputForm").valid()) {
+            if (($("#inputForm").valid()) && (dom.checkPasswords()) && dom.checkStrength()) {
                 dataHandler.handleUserAuthentication('/register', form_values, function (results) {
                     dom.setLoginData(results);
                 });
@@ -181,8 +193,8 @@ export let dom = {
         let logout = document.querySelector("#logout");
         let navbar = document.querySelector("#navbar-text");
         if (username) {
-            navbar.style.display = 'block';
-            navbar.textContent = `Signed in as ${username} `;
+            navbar.style.display = 'inline';
+            navbar.innerHTML = 'Welcome <b>' + username + '</b>!';
             register.style.display = 'none';
             login.style.display = 'none';
             logout.style.display = 'block';
@@ -197,7 +209,103 @@ export let dom = {
         if (sessionStorage.getItem("username"))
             sessionStorage.removeItem("username");
         sessionStorage.removeItem("userid");
-        dataHandler.handleUserAuthentication('/logout', null, function (results) {});
+        dataHandler.handleUserAuthentication('/logout', null, function (results) {
+        });
         location.reload();
+    },
+
+    checkPasswords: function () {
+        let password = document.querySelector("#password").value;
+        let password_check = document.querySelector("#password_confirm").value;
+        if (password !== password_check) {
+            document.querySelector("#modalmessage").innerHTML = "Passwords not same";
+            return false;
+        }
+
+        document.querySelector("#modalmessage").innerHTML = "";
+        return true;
+
+
+    },
+    checkStrength: function () {
+        let strength = 0;
+        let password = document.querySelector("#password").value;
+
+        //If password contains both lower and uppercase characters, increase strength value.
+        if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) {
+            strength += 1;
+            $('.low-upper-case').addClass('text-success');
+            $('.low-upper-case i').removeClass('fa-times').removeClass('text-danger').addClass('fa-check');
+            $('#popover-password-top').addClass('hide');
+
+
+        } else {
+            $('.low-upper-case').removeClass('text-success');
+            $('.low-upper-case i').addClass('fa-times').addClass('text-danger').removeClass('fa-check');
+            $('#popover-password-top').removeClass('hide');
+        }
+
+        //If it has numbers and characters, increase strength value.
+        if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) {
+            strength += 1;
+            $('.one-number').addClass('text-success');
+            $('.one-number i').removeClass('fa-times').removeClass('text-danger').addClass('fa-check');
+            $('#popover-password-top').addClass('hide');
+
+        } else {
+            $('.one-number').removeClass('text-success');
+            $('.one-number i').addClass('fa-times').addClass('text-danger').removeClass('fa-check');
+            $('#popover-password-top').removeClass('hide');
+        }
+
+        //If it has one special character, increase strength value.
+        if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) {
+            strength += 1;
+            $('.one-special-char').addClass('text-success');
+            $('.one-special-char i').removeClass('fa-times').removeClass('text-danger').addClass('fa-check');
+            $('#popover-password-top').addClass('hide');
+
+        } else {
+            $('.one-special-char').removeClass('text-success');
+            $('.one-special-char i').addClass('fa-times').addClass('text-danger').removeClass('fa-check');
+            $('#popover-password-top').removeClass('hide');
+        }
+
+        if (password.length > 7) {
+            strength += 1;
+            $('.eight-character').addClass('text-success');
+            $('.eight-character i').removeClass('fa-times').removeClass('text-danger').addClass('fa-check');
+            $('#popover-password-top').addClass('hide');
+
+        } else {
+            $('.eight-character').removeClass('text-success');
+            $('.eight-character i').addClass('fa-times').addClass('text-danger').removeClass('fa-check');
+            $('#popover-password-top').removeClass('hide');
+        }
+        // If value is less than 2
+        let passwordOk = true;
+        if (strength < 2) {
+            $('#result').removeClass()
+            $('#password-strength').addClass('progress-bar-danger');
+            $('#result').addClass('text-danger').text('Very Weak');
+            $('#password-strength').css('width', '10%');
+            passwordOk = false;
+        } else if (strength == 2) {
+            $('#result').addClass('good');
+            $('#password-strength').removeClass('progress-bar-danger');
+            $('#password-strength').addClass('progress-bar bg-warning');
+            $('#result').addClass('text-warning').text('Weak')
+            $('#password-strength').css('width', '60%');
+            passwordOk = false;
+        } else if (strength == 4) {
+            $('#result').removeClass()
+            $('#result').addClass('strong');
+            $('#password-strength').removeClass('progress-bar bg-warning');
+            $('#password-strength').addClass('progress-bar bg-success');
+            $('#result').addClass('text-success').text('Strength');
+            $('#password-strength').css('width', '100%');
+        }
+        return passwordOk;
     }
+
 }

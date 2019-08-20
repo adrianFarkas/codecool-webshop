@@ -36,6 +36,7 @@ public class RegisterUserController extends HttpServlet {
        }
         else {
             //save data to the database
+           responseData.put("success", "true");
            responseData.put("username", username);
            responseData.put("userid", getUserIdFromDB(username).toString());
            req.getSession().setAttribute("USER_ID", getUserIdFromDB(username));
