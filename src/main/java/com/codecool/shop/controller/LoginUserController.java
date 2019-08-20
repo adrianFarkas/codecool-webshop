@@ -16,7 +16,6 @@ import org.mindrot.jbcrypt.BCrypt;
 
 @WebServlet(urlPatterns = {"/login"})
 public class LoginUserController extends HttpServlet {
-    // private int USER_ID = 2;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

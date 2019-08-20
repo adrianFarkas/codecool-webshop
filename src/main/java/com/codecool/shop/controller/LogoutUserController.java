@@ -10,7 +10,6 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import com.google.gson.Gson;
-import org.mindrot.jbcrypt.BCrypt;
 
 @WebServlet(urlPatterns = {"/logout"})
 public class LogoutUserController extends HttpServlet {
