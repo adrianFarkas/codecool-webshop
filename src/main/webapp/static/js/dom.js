@@ -52,19 +52,22 @@ export let dom = {
                 rules: {
                     username: {
                         required: true,
-                        minlength: 8
+                        minlength: 6
                     },
                     password: "required",
                     email: "required"
                 },
                 messages: {
                     username: {
-                        required: "Please provide your user name!",
-                        minlength: "Your user name must be at least 8 characters!"
+                        required : '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Please enter your user name!</span>',
+                        //required: '<i class="fa fa-info-circle text-danger prefix" aria-hidden="true"></i><p class="text-danger">Please provide your user name!"</p>',
+                      //  required: '<p class="text-danger"><b>Please provide your user name!"</b></p>',
+                        minlength: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Your user name must be at least 6 characters!</span>'
                     },
-                    password: "Please provide your password!",
-                    email: "Please enter a valid email address!"
+                    password: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Please provide your password!</span>',
+                    email: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Please enter a valid email address!</span>'
                 }
+
             });
 
         });
@@ -129,20 +132,17 @@ export let dom = {
         let form_values = {};
 
         $('#inputLabel').text(title);
-        $('#modalmessage').text("");
+        $('#modalErrorMessage').text("");
         if (button_text === "Login") {
-            $('#user-email').css('display', 'none');
-            $('#user-password_confirm').css('display', 'none');
-            $('#popover-password').css('display', 'none');
-
+            dom.setModalForLogin('none')
         } else {
-            $('#user-email').css('display', 'block');
-            $('#user-password_confirm').css('display', 'block');
-            $('#popover-password').css('display', 'block');
+            dom.setModalForLogin('block');
         }
 
+        let $inputModal = $('#inputModal');
 
-        $('#inputModal').modal({show: true});
+        $inputModal.validate().resetForm();
+        $inputModal.modal({show: true});
         let $submitButton = $('#submit-button');
         $submitButton.off();
         $submitButton.text(button_text);
@@ -155,7 +155,11 @@ export let dom = {
         })
 
     },
-
+    setModalForLogin: function(displayType){
+        $('#user-email').css('display', displayType);
+        $('#user-password_confirm').css('display', displayType);
+        $('#popover-password').css('display', displayType);
+    },
     setLoginData: function (results) {
 
         if (results["success"] === "true") {
@@ -164,7 +168,7 @@ export let dom = {
             dom.showLoggedIn();
             location.reload();
         } else {
-            document.querySelector("#modalmessage").innerHTML = `${results["type"]} failed. ${results["message"]}`;
+            document.querySelector("#modalErrorMessage").innerHTML = `${results["type"]} failed. ${results["message"]}`;
         }
     },
     login: function () {
@@ -218,11 +222,11 @@ export let dom = {
         let password = document.querySelector("#password").value;
         let password_check = document.querySelector("#password_confirm").value;
         if (password !== password_check) {
-            document.querySelector("#modalmessage").innerHTML = "Passwords not same";
+            document.querySelector("#modalErrorMessage").innerHTML = "Passwords not same";
             return false;
         }
 
-        document.querySelector("#modalmessage").innerHTML = "";
+        document.querySelector("#modalErrorMessage").innerHTML = "";
         return true;
 
 
@@ -283,27 +287,33 @@ export let dom = {
             $('#popover-password-top').removeClass('hide');
         }
         // If value is less than 2
+        let $result = $('#result');
+        let $passwordStrength = $('#password-strength');
         let passwordOk = true;
-        if (strength < 2) {
-            $('#result').removeClass()
-            $('#password-strength').addClass('progress-bar-danger');
-            $('#result').addClass('text-danger').text('Very Weak');
-            $('#password-strength').css('width', '10%');
+        if (strength===0){
+            $passwordStrength.css('width', '0%');
+            return false;
+        }
+        else if (strength < 2) {
+            $result.removeClass()
+            $passwordStrength.addClass('progress-bar-danger');
+            $result.addClass('text-danger').text('Very Weak');
+            $passwordStrength.css('width', '10%');
             passwordOk = false;
-        } else if (strength == 2) {
-            $('#result').addClass('good');
-            $('#password-strength').removeClass('progress-bar-danger');
-            $('#password-strength').addClass('progress-bar bg-warning');
-            $('#result').addClass('text-warning').text('Weak')
-            $('#password-strength').css('width', '60%');
+        } else if (strength === 2) {
+            $result.addClass('good');
+            $passwordStrength.removeClass('progress-bar-danger');
+            $passwordStrength.addClass('progress-bar bg-warning');
+            $result.addClass('text-warning').text('Weak')
+            $passwordStrength.css('width', '60%');
             passwordOk = false;
-        } else if (strength == 4) {
-            $('#result').removeClass()
-            $('#result').addClass('strong');
-            $('#password-strength').removeClass('progress-bar bg-warning');
-            $('#password-strength').addClass('progress-bar bg-success');
-            $('#result').addClass('text-success').text('Strength');
-            $('#password-strength').css('width', '100%');
+        } else if (strength === 4) {
+            $result.removeClass()
+            $result.addClass('strong');
+            $passwordStrength.removeClass('progress-bar bg-warning');
+            $passwordStrength.addClass('progress-bar bg-success');
+            $result.addClass('text-success').text('Strength');
+            $passwordStrength.css('width', '100%');
         }
         return passwordOk;
     }
