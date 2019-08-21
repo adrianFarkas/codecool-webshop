@@ -310,7 +310,10 @@ export let dom = {
     },
     showModalErrorMessage : function (message) {
         let modalErrorMessageHtml = document.querySelector("#modalErrorMessage");
-        modalErrorMessageHtml.innerHTML = `<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i><b> ${message} </b></span>`;
+        if (message === "")
+            modalErrorMessageHtml.innerHTML = "";
+        else
+            modalErrorMessageHtml.innerHTML = `<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i><b> ${message} </b></span>`;
 
     }
 
