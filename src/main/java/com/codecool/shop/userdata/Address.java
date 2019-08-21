@@ -1,35 +1,38 @@
 package com.codecool.shop.userdata;
 
+import com.codecool.shop.Util;
+import com.codecool.shop.dao.implementation.AddressDaoJDBC;
+
 public class Address {
+
+    private Integer id;
     private String country;
     private String city;
-    private int zipCode;
+    private Integer zipCode;
     private String address;
-    public Address(){
-        this("","",0,"");
+    private AddressType type;
+
+    public Address() {
+        this(Util.getNextIdFromTable("addresses"), null, null, null, null, null);
     }
 
-    public Address(String country, String city, int zipCode, String address) {
+    public Address(Integer id, String country, String city, Integer zipCode, String address, AddressType type) {
+        this.id = id;
         this.country = country;
         this.city = city;
         this.zipCode = zipCode;
         this.address = address;
+        this.type = type;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public static Address create(AddressType type) {
+        Address newAddress = new Address(Util.getNextIdFromTable("addresses"), null, null, 0, null, type);
+        new AddressDaoJDBC().add(newAddress);
+        return newAddress;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setZipCode(int zipCode) {
-        this.zipCode = zipCode;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public Integer getId() {
+        return id;
     }
 
     public String getCountry() {
@@ -40,7 +43,7 @@ public class Address {
         return city;
     }
 
-    public int getZipCode() {
+    public Integer getZipCode() {
         return zipCode;
     }
 
@@ -48,10 +51,18 @@ public class Address {
         return address;
     }
 
+    public AddressType getType() {
+        return type;
+    }
+
     public void setAll(String city, String country, int zipCode, String address){
         this.city = city;
         this.country = country;
         this.zipCode = zipCode;
         this.address = address;
+    }
+
+    public void setType(AddressType type) {
+        this.type = type;
     }
 }

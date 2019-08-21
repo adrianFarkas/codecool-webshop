@@ -1,4 +1,4 @@
-package com.codecool.shop.dao.implementation;
+package com.codecool.shop.dao.implementation.daomem;
 
 import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.model.Order;
@@ -44,22 +44,19 @@ public class OrderDaoMem implements OrderDao {
         data.remove(findById(id));
     }
 
+
     @Override
-    public List<Order> getAll() {
-        return data;
-    }
-
-
     public Order getActualOrderByUser(int userId) {
         List<Order> orders = findAllByUserId(userId);
         Order actualOrder = orders.stream().filter(t -> !t.getStatus().equals(Status.PAID)).findFirst().orElse(null);
         return actualOrder;
     }
 
-    public Order createOrder(int userId) {
+    @Override
+    public Order createOrderIfNotExists(int userId) {
         Order actual = getActualOrderByUser(userId);
         if(actual == null) {
-            Order newOrder = new Order(userId);
+            Order newOrder = Order.create(userId);
             add(newOrder);
             return newOrder;
         }
