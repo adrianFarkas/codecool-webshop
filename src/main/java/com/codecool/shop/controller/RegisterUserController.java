@@ -10,11 +10,15 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.codecool.shop.dao.implementation.CustomerDaoJDBC;
+import com.codecool.shop.userdata.Customer;
 import com.google.gson.Gson;
 import org.mindrot.jbcrypt.BCrypt;
 
 @WebServlet(urlPatterns = {"/register"})
 public class RegisterUserController extends HttpServlet {
+
+    CustomerDaoJDBC customerDataStore = new CustomerDaoJDBC();
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map requestData = new Gson().fromJson(req.getReader(), Map.class);
@@ -22,13 +26,15 @@ public class RegisterUserController extends HttpServlet {
 
         String username = (String) requestData.get("username");
         String password = (String) requestData.get("password");
+        String email = (String) requestData.get("email");
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
         if (checkUsernameExists(username)) {
             responseData.put("success", "false");
             responseData.put("message", "Username already exists. Please select another!");
         } else {
-            //save data to the database
+            Customer customer = new Customer(null, username, hashedPassword, email);
+            customerDataStore.add(customer);
             responseData.put("success", "true");
             responseData.put("username", username);
             responseData.put("userid", getUserIdFromDB(username).toString());
@@ -45,16 +51,13 @@ public class RegisterUserController extends HttpServlet {
 
     //check in database the user name
     private Boolean checkUsernameExists(String username) {
-        return username.equals("cccccccc") || (username.equals("d"));
+        return customerDataStore.find(username)!=null;
     }
 
     //get user id from database
     private Integer getUserIdFromDB(String username) {
-        if (username.equals("eeeeeeee"))
-            return 999;
-        else if (username.equals("b"))
-            return 990;
-        else
-            return -1;
+        Customer customer = customerDataStore.find(username);
+        return customer.getId();
     }
 }
+

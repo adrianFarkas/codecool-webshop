@@ -162,7 +162,6 @@ export let dom = {
 
         if (results["success"] === "true") {
             sessionStorage.setItem('username', results["username"]);
-            sessionStorage.setItem('userid', results["userid"]);
             dom.showLoggedIn();
             location.reload();
         } else {
@@ -210,7 +209,6 @@ export let dom = {
     logout: function () {
         if (sessionStorage.getItem("username"))
             sessionStorage.removeItem("username");
-        sessionStorage.removeItem("userid");
         dataHandler.handleUserAuthentication('/logout', null, function (results) {
         });
         location.reload();
