@@ -1,7 +1,8 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.implementation.OrderDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.OrderDao;
+import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.Order;
 import com.codecool.shop.model.Product;
 import com.google.gson.Gson;
@@ -20,6 +21,8 @@ import java.util.Map;
 public class AddToCartController extends HttpServlet {
 
     private int USER_ID = 2;
+    private ProductDao productDataStore = new ProductDaoJDBC();
+    private OrderDao orderDataStore = new OrderDaoJDBC();
 
 
     @Override
@@ -28,8 +31,8 @@ public class AddToCartController extends HttpServlet {
         Map<String, Integer> responseData = new HashMap<>();
 
         int productId = Integer.parseInt((String) requestData.get("productId"));
-        Product product = ProductDaoMem.getInstance().find(productId);
-        Order order = OrderDaoMem.getInstance().createOrder(USER_ID);
+        Product product = productDataStore.find(productId);
+        Order order = orderDataStore.createOrderIfNotExists(USER_ID);
         order.addItem(product);
 
         responseData.put("cartSize", order.getProductsNumber());

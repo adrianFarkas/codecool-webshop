@@ -1,7 +1,8 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.implementation.OrderDaoMem;
+import com.codecool.shop.dao.OrderDao;
+import com.codecool.shop.dao.implementation.OrderDaoJDBC;
 import com.codecool.shop.model.Order;
 import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
@@ -24,18 +25,18 @@ public class ShoppingCartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        OrderDaoMem orderDataStore = OrderDaoMem.getInstance();
+        OrderDao orderDataStore = new OrderDaoJDBC();
 
         Order order = orderDataStore.getActualOrderByUser(USER_ID);
         Map<Product, Integer> lineItem = new HashMap<>();
         float total = 0;
 
-
-        if(order != null) {
+        if (!(order == null) && order.getProductsNumber() == 0) {
+            new OrderDaoJDBC().remove(order.getId());
+        } else if (!(order == null)) {
             lineItem = order.getProductsPartitionByNum();
             total = order.getTotalPrice();
         }
-
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());

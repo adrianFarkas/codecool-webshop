@@ -2,11 +2,9 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.implementation.OrderDaoMem;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.Order;
 import org.thymeleaf.TemplateEngine;
@@ -24,31 +22,26 @@ import java.util.stream.Collectors;
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
     private Integer USER_ID = 2;
-    private int cartSize;
     private int filterSuppId = -1;
     private int filterCatId = -1;
+    private ProductDao productDataStore = new ProductDaoJDBC();
+    private ProductCategoryDao productCategoryDataStore = new ProductCategoryDaoJDBC();
+    private SupplierDao supplierDaoMem = new SupplierDaoJDBC();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDaoMem supplierDaoMem = SupplierDaoMem.getInstance();
 
-        setCartSize();
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("category", productCategoryDataStore.getAll());
-        context.setVariable("products", filterProducts(productCategoryDataStore, productDataStore, supplierDaoMem));
+        context.setVariable("products", filterProducts());
         context.setVariable(("suppliers"), supplierDaoMem.getAll());
         context.setVariable("filterCatId", req.getParameter("categories"));
         context.setVariable("filterSupptId", req.getParameter("suppliers"));
-        context.setVariable("cartSize", cartSize);
-        // // Alternative setting of the template context
-        // Map<String, Object> params = new HashMap<>();
-        // params.put("category", productCategoryDataStore.find(1));
-        // params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
-        // context.setVariables(params);
+        context.setVariable("cartSize", getCartSize());
+
+
         engine.process("product/index.html", context, resp.getWriter());
     }
 
@@ -57,13 +50,13 @@ public class ProductController extends HttpServlet {
         doGet(req,resp);
     }
 
-    private void setCartSize() {
+    private int getCartSize() {
         Order cart = null;
 
-        if (USER_ID != null) cart = OrderDaoMem.getInstance().getActualOrderByUser(USER_ID);
+        if (USER_ID != null) cart = new OrderDaoJDBC().getActualOrderByUser(USER_ID);
 
-        if(cart != null) cartSize = cart.getProductsNumber();
-        else cartSize = 0;
+        if(cart != null) return cart.getProductsNumber();
+        return 0;
     }
 
     private void setFilterID(HttpServletRequest req){
@@ -80,15 +73,17 @@ public class ProductController extends HttpServlet {
 
     }
 
-    private List<Product> filterProducts(ProductCategoryDao productCategoryDataStore, ProductDao productDataStore, SupplierDaoMem supplierDaoMem){
+    private List<Product> filterProducts(){
 
         List<Product> filteredList;
+
         if (filterCatId==-1){
             filteredList = productDataStore.getAll();
         }else
             filteredList = productDataStore.getBy(productCategoryDataStore.find(filterCatId));
         if (filterSuppId==-1)
             return filteredList;
-        return filteredList.stream().filter(t -> t.getSupplier().equals(supplierDaoMem.find(filterSuppId))).collect(Collectors.toList());
+        return filteredList.stream().filter(t -> t.getSupplier().toString()
+                .equals(supplierDaoMem.find(filterSuppId).toString())).collect(Collectors.toList());
     }
 }

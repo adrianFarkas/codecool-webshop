@@ -1,7 +1,9 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.implementation.OrderDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.OrderDao;
+import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.implementation.OrderDaoJDBC;
+import com.codecool.shop.dao.implementation.ProductDaoJDBC;
 import com.codecool.shop.model.Order;
 import com.codecool.shop.model.Product;
 import com.google.gson.Gson;
@@ -20,6 +22,8 @@ import java.util.Map;
 public class EditCartController extends HttpServlet {
 
     private int USER_ID = 2;
+    private OrderDao orderDataStore = new OrderDaoJDBC();
+    private ProductDao productDataStore = new ProductDaoJDBC();
 
 
     @Override
@@ -28,19 +32,16 @@ public class EditCartController extends HttpServlet {
         Map<String, Float> responseData = new HashMap<>();
 
         int prodId = Integer.parseInt((String) requestData.get("productId"));
-        int num = Integer.parseInt((String) requestData.get("num"));
+        int newQuantity = Integer.parseInt((String) requestData.get("newQuantity"));
+        int actQuantity = Integer.parseInt((String) requestData.get("actQuantity"));
 
+        Product product = productDataStore.find(prodId);
+        Order order = orderDataStore.getActualOrderByUser(USER_ID);
 
-        Product product = ProductDaoMem.getInstance().find(prodId);
-        Order order = OrderDaoMem.getInstance().createOrder(USER_ID);
+        int newItemsNum = Math.abs(newQuantity - actQuantity);
 
-        Map<Product, Integer> products = order.getProductsPartitionByNum();
-        int productNum = products.get(product);
-        int newItemsNum = Math.abs(num - productNum);
-
-        if (productNum < num) order.addMultipleItem(product, newItemsNum);
-        else if (productNum > num) order.removeMultiple(product, newItemsNum);
-
+        if (actQuantity < newQuantity) order.addMultipleItem(product, newItemsNum);
+        else if (actQuantity > newQuantity) order.removeMultiple(product, newItemsNum);
 
         responseData.put("prodTotalPrice", order.getTotalPriceForProduct(product));
         responseData.put("totalPrice", order.getTotalPrice());
