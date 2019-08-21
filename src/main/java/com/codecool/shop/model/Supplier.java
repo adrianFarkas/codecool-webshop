@@ -1,14 +1,21 @@
 package com.codecool.shop.model;
 
+import com.codecool.shop.Util;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Supplier extends BaseModel {
     private List<Product> products;
 
-    public Supplier(String name, String description) {
-        super(name);
+    public Supplier(Integer id, String name, String description) {
+        super(name, description);
+        this.id = id;
         this.products = new ArrayList<>();
+    }
+
+    public static Supplier create(String name, String description) {
+        return new Supplier(Util.getNextIdFromTable("suppliers"), name, description);
     }
 
     public void setProducts(ArrayList<Product> products) {
