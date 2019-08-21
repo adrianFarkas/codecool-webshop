@@ -11,16 +11,15 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.codecool.shop.dao.implementation.CustomerDaoJDBC;
+import com.codecool.shop.userdata.Customer;
 import com.google.gson.Gson;
 import org.mindrot.jbcrypt.BCrypt;
 
 @WebServlet(urlPatterns = {"/login"})
 public class LoginUserController extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-    }
+    CustomerDaoJDBC customerDataStore = new CustomerDaoJDBC();
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map requestData = new Gson().fromJson(req.getReader(), Map.class);
@@ -28,14 +27,13 @@ public class LoginUserController extends HttpServlet {
 
         String username = (String) requestData.get("username");
         String password = (String) requestData.get("password");
+        Customer customer = customerDataStore.find(username);
 
-        if (checkLoginCredentials(username, password)) {
+        if (BCrypt.checkpw(password,customer.getPassword())) {
             responseData.put("success", "true");
             responseData.put("username", username);
-            responseData.put("userid", getUserIdFromDB(username).toString());
             HttpSession session = req.getSession();
-            session.setAttribute("USER_ID", getUserIdFromDB(username));
-            session.setAttribute("USER_NAME", username);
+            session.setAttribute("USER_ID", customer.getId());
         } else {
             responseData.put("success", "false");
             responseData.put("message", "Wrong username or password!");
@@ -49,29 +47,5 @@ public class LoginUserController extends HttpServlet {
         out.flush();
     }
 
-    private Boolean checkLoginCredentials(String username, String password) {
-        String storedPassword = getUserStoredPasswordFromDB(username);
-        if (storedPassword == null)
-            return false;
-        return (BCrypt.checkpw(password, storedPassword));
-
-    }
-
-    private String getUserStoredPasswordFromDB(String username) {
-        if (username.equals("aaaaaaaa"))
-            return "$2a$10$dsZnAfEmXOPFK.CmB5QjCOmoFheKjCaDBJoIkNpi4bOOFYkjuFAeS";
-        else if (username.equals("bbbbbbbb"))
-            return "$2a$10$06VDqKsZQjZMDjW/v.p30.53BYiBQ2uHUMrd2ouUAt468vn6hes.e";
-        else
-            return null;
-    }
-
-    private Integer getUserIdFromDB(String username) {
-        if (username.equals("aaaaaaaa"))
-            return 999;
-        else if (username.equals("bbbbbbbb"))
-            return 990;
-        else
-            return -1;
-    }
 }
+
