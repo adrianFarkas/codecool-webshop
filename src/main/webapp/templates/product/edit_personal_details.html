@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Codecool Shop | Edit Personal details</title>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
+    <script type="module" src="/static/js/main.js" defer></script>
+</head>
+<body>
+<div class="jumbotron text-center">
+    <h1>Personal Details</h1>
+</div>
+<div class="container wrapper align-items-center">
+
+    <div class="row ">
+        <div class="container ">
+            <form action="/edit-details" method="post" class="checkout-form">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Your Personal Details</div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <strong>Name:</strong>
+                                    <input type="text" name="name" class="form-control" th:value="${userDetails.getName()}" required/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12"><strong>Email Address:</strong></div>
+                                <div class="col-md-12"><input type="text" name="email_address" class="form-control"
+                                                              th:value="${userDetails.getEmail()}" required/></div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12"><strong>Phone Number:</strong></div>
+                                <div class="col-md-12"><input type="text" name="phone_number" class="form-control" th:value="${userDetails.getPhoneNumber()}">
+                                </div>
+                                <div class="col-md-12"><br>
+                                    <h4>Billing Address</h4>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>Country:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" name="billing-country" th:value="${userDetails.getBillingAddress().getCountry()}"
+                                               required/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>City:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="text" name="billing-city" class="form-control" th:value="${userDetails.getBillingAddress().getCity()}" required/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>Zip / Postal Code:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="number" name="billing-zipcode" class="form-control" th:value="${userDetails.getBillingAddress().getZipCode()}"
+                                               required/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>Address:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="text" name="billing-address" class="form-control" th:value="${userDetails.getBillingAddress().getAddress()}"
+                                               required/>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12"><input type="checkbox" name="cb" class="checkout-checkbox"
+                                                              th:checked="${isSameAddress} ? 'checked'">Shipping
+                                    address is the same as my billing address
+                                </div>
+                            </div>
+                            <div class="checkout-shipping-address">
+                                <div class="col-md-12"><br>
+                                    <h4>Shipping Address</h4>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>Country:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control shipping" name="shipping-country"
+                                               th:value="${userDetails.getShippingAddress().getCountry()}"
+                                               required/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>City:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="text" name="shipping-city" class="form-control shipping" th:value="${userDetails.getShippingAddress().getCity()}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>Zip / Postal Code:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="number" name="shipping-zipcode" class="form-control shipping"
+                                               th:value="${userDetails.getShippingAddress().getZipCode()}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>Address:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="text" name="shipping-address" class="form-control shipping"
+                                               th:value="${userDetails.getShippingAddress().getAddress()}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="checkout-button">
+                        <a href="/" class="btn btn-warning col-md-2"><i class="fa fa-angle-left"></i>
+                            Back to shop</a>
+                        <button type="submit" name="submit" class="btn btn-success btn-block pull-right col-md-2">
+                            Save <i class="fa fa-angle-right"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="footer.html :: copy"></div>
+
+</body>
+</html>
