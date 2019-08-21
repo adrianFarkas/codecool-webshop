@@ -2,9 +2,11 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.OrderDao;
+import com.codecool.shop.dao.implementation.CustomerDetailsDaoJDBC;
 import com.codecool.shop.dao.implementation.OrderDaoJDBC;
 import com.codecool.shop.dao.implementation.DeliveryDetailsDaoJDBC;
 import com.codecool.shop.model.Order;
+import com.codecool.shop.model.Status;
 import com.codecool.shop.userdata.Address;
 import com.codecool.shop.userdata.Userdata;
 
@@ -24,14 +26,17 @@ public class CheckoutController extends HttpServlet {
 
     private OrderDao orderDataStore = new OrderDaoJDBC();
     private DeliveryDetailsDaoJDBC deliveryDetailsStore = new DeliveryDetailsDaoJDBC();
+    private CustomerDetailsDaoJDBC customerDetailsStore = new CustomerDetailsDaoJDBC();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int USER_ID = SessionController.getInstance().readIntegerAttributeFromSession(req, "USER_ID");
         Order order = orderDataStore.getActualOrderByUser(USER_ID);
+        Userdata userdata;
 
         if (order != null) {
-            Userdata userdata = deliveryDetailsStore.find(order.getId());
+            if(order.getStatus().equals(Status.CHECKED)) userdata = deliveryDetailsStore.find(order.getId());
+            else userdata = customerDetailsStore.find(USER_ID);
 
             TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
             WebContext context = new WebContext(req, resp, req.getServletContext());
