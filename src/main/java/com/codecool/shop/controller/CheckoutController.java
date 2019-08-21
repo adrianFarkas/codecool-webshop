@@ -21,12 +21,13 @@ import java.util.Objects;
 
 @WebServlet(urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {
-    private int USER_ID = 2;
+
     private OrderDao orderDataStore = new OrderDaoJDBC();
     private DeliveryDetailsDaoJDBC deliveryDetailsStore = new DeliveryDetailsDaoJDBC();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int USER_ID = SessionController.getInstance().readIntegerAttributeFromSession(req, "USER_ID");
         Order order = orderDataStore.getActualOrderByUser(USER_ID);
 
         if (order != null) {
@@ -42,6 +43,7 @@ public class CheckoutController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int USER_ID = SessionController.getInstance().readIntegerAttributeFromSession(req, "USER_ID");
         Order order = orderDataStore.getActualOrderByUser(USER_ID);
         if (order != null) {
             insertUserDataIntoOrder(req, order);

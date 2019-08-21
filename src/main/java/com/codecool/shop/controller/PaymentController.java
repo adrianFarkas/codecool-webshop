@@ -14,16 +14,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @WebServlet(urlPatterns = {"/payment"})
 public class PaymentController extends HttpServlet {
-    private int USER_ID = 2;
     private OrderDao orderDataStore = new OrderDaoJDBC();
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int USER_ID = SessionController.getInstance().readIntegerAttributeFromSession(req, "USER_ID");
         Order order = orderDataStore.getActualOrderByUser(USER_ID);
         if (order!=null) {
             Map<Product, Integer> lineItem = order.getProductsPartitionByNum();
@@ -41,6 +42,7 @@ public class PaymentController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int USER_ID = SessionController.getInstance().readIntegerAttributeFromSession(req, "USER_ID");
         Order order = orderDataStore.getActualOrderByUser(USER_ID);
         order.pay();
         resp.sendRedirect("/");

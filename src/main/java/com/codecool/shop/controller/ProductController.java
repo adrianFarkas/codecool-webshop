@@ -15,13 +15,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
-    private Integer USER_ID = 2;
+
     private int filterSuppId = -1;
     private int filterCatId = -1;
     private ProductDao productDataStore = new ProductDaoJDBC();
@@ -30,7 +31,7 @@ public class ProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        int USER_ID = SessionController.getInstance().readIntegerAttributeFromSession(req, "USER_ID");
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -39,8 +40,8 @@ public class ProductController extends HttpServlet {
         context.setVariable(("suppliers"), supplierDaoMem.getAll());
         context.setVariable("filterCatId", req.getParameter("categories"));
         context.setVariable("filterSupptId", req.getParameter("suppliers"));
-        context.setVariable("cartSize", getCartSize());
-
+        context.setVariable("cartSize", getCartSize(USER_ID));
+        context.setVariable("USER_ID", USER_ID);
 
         engine.process("product/index.html", context, resp.getWriter());
     }
@@ -50,7 +51,7 @@ public class ProductController extends HttpServlet {
         doGet(req,resp);
     }
 
-    private int getCartSize() {
+    private int getCartSize(Integer USER_ID) {
         Order cart = null;
 
         if (USER_ID != null) cart = new OrderDaoJDBC().getActualOrderByUser(USER_ID);
@@ -76,7 +77,6 @@ public class ProductController extends HttpServlet {
     private List<Product> filterProducts(){
 
         List<Product> filteredList;
-
         if (filterCatId==-1){
             filteredList = productDataStore.getAll();
         }else

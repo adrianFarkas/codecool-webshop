@@ -88,5 +88,10 @@
             <artifactId>json</artifactId>
             <version>20171018</version>
         </dependency>
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.3m</version>
+        </dependency>
     </dependencies>
 </project>

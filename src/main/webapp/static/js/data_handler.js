@@ -29,5 +29,10 @@ export let dataHandler = {
         this._api_post('/edit-cart', data, (response) => {
             callback(response);
         })
-    }
+    },
+    handleUserAuthentication: function (url, data, callback) {
+        this._api_post(url, data, (response) => {
+        callback(response);
+    });
+    },
 };

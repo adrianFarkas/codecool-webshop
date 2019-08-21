@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -20,13 +21,13 @@ import java.util.Map;
 @WebServlet(urlPatterns = {"/add-to-cart"})
 public class AddToCartController extends HttpServlet {
 
-    private int USER_ID = 2;
     private ProductDao productDataStore = new ProductDaoJDBC();
     private OrderDao orderDataStore = new OrderDaoJDBC();
 
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int USER_ID =  SessionController.getInstance().readIntegerAttributeFromSession(req, "USER_ID");
+
         Map requestData = new Gson().fromJson(req.getReader(), Map.class);
         Map<String, Integer> responseData = new HashMap<>();
 
