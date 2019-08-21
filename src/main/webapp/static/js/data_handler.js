@@ -20,10 +20,11 @@ export let dataHandler = {
             callback(response);
         })
     },
-    editCart: function (productId, numOfNewProds, callback) {
+    editCart: function (prodId, newProdsNumber, actProdNum, callback) {
         let data = {
-            'productId': productId,
-            'num': numOfNewProds
+            'productId': prodId,
+            'newQuantity': newProdsNumber.toString(),
+            'actQuantity' : actProdNum.toString()
         };
         this._api_post('/edit-cart', data, (response) => {
             callback(response);

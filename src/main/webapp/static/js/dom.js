@@ -63,11 +63,14 @@ export let dom = {
         let item = e.currentTarget;
         let classList = e.target.classList;
         if(classList.contains("refresh") || classList.contains("remove")) {
+
             let input = e.currentTarget.querySelector(".quantity-num");
             let prodId = e.currentTarget.dataset.prodId;
             let newProdsNumber = classList.contains("remove") ? 0 : input.value;
+            let actProdNum = input.dataset.currentNum;
 
-            dataHandler.editCart(prodId, newProdsNumber.toString(), function (response) {
+
+            dataHandler.editCart(prodId, newProdsNumber, actProdNum, function (response) {
                 let newProdPrice = response["prodTotalPrice"];
                 let totalPrice = response["totalPrice"];
                 if(classList.contains("remove")) {
