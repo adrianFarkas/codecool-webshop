@@ -15,7 +15,6 @@ import com.google.gson.Gson;
 public class LogoutUserController extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       // Map requestData = new Gson().fromJson(req.getReader(), Map.class);
         Map<String, String> responseData = new HashMap<>();
         req.getSession().invalidate();
 

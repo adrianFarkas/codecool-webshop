@@ -21,12 +21,12 @@ import java.util.Objects;
 
 @WebServlet(urlPatterns = {"/edit-details"})
 public class UserEditDetailsController extends HttpServlet {
-    private int USER_ID = 2;
     private CustomerDetailsDaoJDBC customerDetailStore = new CustomerDetailsDaoJDBC();
     private AddressDaoJDBC addressDataStore = new AddressDaoJDBC();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int USER_ID = (int) req.getSession().getAttribute("USER_ID");
         Userdata userdata = customerDetailStore.find(USER_ID);
         boolean isSameAddress = true;
         if(userdata == null) userdata = new Userdata();
@@ -40,8 +40,9 @@ public class UserEditDetailsController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int USER_ID = (int) req.getSession().getAttribute("USER_ID");
         Userdata userdata = customerDetailStore.find(USER_ID);
-        if (userdata == null) addNewPersonalDetails(req);
+        if (userdata == null) addNewPersonalDetails(req, USER_ID);
         else updatePersonalDetails(req, userdata);
         resp.sendRedirect("/");
     }
@@ -82,7 +83,7 @@ public class UserEditDetailsController extends HttpServlet {
         customerDetailStore.update(userdata);
     }
 
-    private void addNewPersonalDetails(HttpServletRequest req) {
+    private void addNewPersonalDetails(HttpServletRequest req, int USER_ID  ) {
         Userdata newUserDetails;
         Address shippingAddress;
         Address billingAddress = createBillingAddress(req);
