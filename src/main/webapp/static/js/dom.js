@@ -62,7 +62,7 @@ export let dom = {
                         required: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Please enter your user name!</span>',
                         minlength: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Your user name must be at least 6 characters!</span>'
                     },
-                    password: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Please provide your password!</span>',
+                    password: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Please enter your password!</span>',
                     email: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Please enter a valid email address!</span>'
                 }
 
@@ -302,7 +302,7 @@ export let dom = {
             $result.addClass('strong');
             $passwordStrength.removeClass('progress-bar bg-warning');
             $passwordStrength.addClass('progress-bar bg-success');
-            $result.addClass('text-success').text('Strength');
+            $result.addClass('text-success').text('Strong');
             $passwordStrength.css('width', '100%');
         }
         return passwordOk;
