@@ -29,7 +29,12 @@ public class LoginUserController extends HttpServlet {
         String password = (String) requestData.get("password");
         Customer customer = customerDataStore.find(username);
 
-        if (BCrypt.checkpw(password,customer.getPassword())) {
+        if (customer==null)
+        {
+            responseData.put("success", "false");
+            responseData.put("message", "Wrong username or password!");
+        }
+        else if (BCrypt.checkpw(password,customer.getPassword())) {
             responseData.put("success", "true");
             responseData.put("username", username);
             HttpSession session = req.getSession();
