@@ -13,7 +13,7 @@ class ProductCategoryDaoTest {
     private ProductCategoryDaoJDBC productCategoryDataStore = new ProductCategoryDaoJDBC();
 
     @BeforeAll
-    private static void init() {
+    public static void init() {
         DataBaseHandler.setDatabase("test.properties");
     }
 
