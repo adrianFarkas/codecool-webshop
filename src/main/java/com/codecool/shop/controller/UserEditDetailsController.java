@@ -123,7 +123,7 @@ public class UserEditDetailsController extends HttpServlet {
                 Util.getNextIdFromTable("addresses"),
                 req.getParameter("billing-country"),
                 req.getParameter("billing-city"),
-                Integer.parseInt(req.getParameter("billing-zipcode")),
+                Integer.parseInt(req.getParameter("billing-zipcode").equals("") ? "0" : req.getParameter("billing-zipcode")),
                 req.getParameter("billing-address"),
                 AddressType.BILLING
         );
@@ -134,7 +134,7 @@ public class UserEditDetailsController extends HttpServlet {
                 Util.getNextIdFromTable("addresses"),
                 req.getParameter("shipping-country"),
                 req.getParameter("shipping-city"),
-                Integer.parseInt(req.getParameter("shipping-zipcode")),
+                Integer.parseInt(req.getParameter("shipping-zipcode").equals("") ? "0" : req.getParameter("shipping-zipcode")),
                 req.getParameter("shipping-address"),
                 AddressType.SHIPPING
         );

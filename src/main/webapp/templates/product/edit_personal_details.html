@@ -54,13 +54,13 @@
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <strong>Name:</strong>
-                                    <input type="text" name="name" class="form-control" th:value="${userDetails.getName()}" required/>
+                                    <input type="text" name="name" class="form-control" th:value="${userDetails.getName()}" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-12"><strong>Email Address:</strong></div>
                                 <div class="col-md-12"><input type="text" name="email_address" class="form-control"
-                                                              th:value="${userDetails.getEmail()}" required/></div>
+                                                              th:value="${userDetails.getEmail()}" /></div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-12"><strong>Phone Number:</strong></div>
@@ -73,27 +73,27 @@
                                     <div class="col-md-12"><strong>Country:</strong></div>
                                     <div class="col-md-12">
                                         <input type="text" class="form-control" name="billing-country" th:value="${userDetails.getBillingAddress().getCountry()}"
-                                               required/>
+                                               />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-12"><strong>City:</strong></div>
                                     <div class="col-md-12">
-                                        <input type="text" name="billing-city" class="form-control" th:value="${userDetails.getBillingAddress().getCity()}" required/>
+                                        <input type="text" name="billing-city" class="form-control" th:value="${userDetails.getBillingAddress().getCity()}" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-12"><strong>Zip / Postal Code:</strong></div>
                                     <div class="col-md-12">
                                         <input type="number" name="billing-zipcode" class="form-control" th:value="${userDetails.getBillingAddress().getZipCode()}"
-                                               required/>
+                                               />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-12"><strong>Address:</strong></div>
                                     <div class="col-md-12">
                                         <input type="text" name="billing-address" class="form-control" th:value="${userDetails.getBillingAddress().getAddress()}"
-                                               required/>
+                                               />
                                     </div>
                                 </div>
 
@@ -111,7 +111,7 @@
                                     <div class="col-md-12">
                                         <input type="text" class="form-control shipping" name="shipping-country"
                                                th:value="${userDetails.getShippingAddress().getCountry()}"
-                                               required/>
+                                               />
                                     </div>
                                 </div>
                                 <div class="form-group">
