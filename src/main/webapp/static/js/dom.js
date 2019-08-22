@@ -13,9 +13,12 @@ export let dom = {
         dom.addKeyUoHandlerToModalInputs();
     },
     addEventToUserLoginLogout: function () {
-        document.querySelector('#logout').addEventListener('click', dom.logout);
-        document.querySelector('#login').addEventListener('click', dom.login);
-        document.querySelector('#register').addEventListener('click', dom.register);
+        if (document.querySelector('#logout'))
+        {
+            document.querySelector('#logout').addEventListener('click', dom.logout);
+            document.querySelector('#login').addEventListener('click', dom.login);
+            document.querySelector('#register').addEventListener('click', dom.register);
+        }
     },
     addEventToCheckoutCheckbox: function () {
         let a = document.querySelector('.checkout-checkbox');
@@ -43,31 +46,36 @@ export let dom = {
         }
     },
     addKeyUoHandlerToModalInputs: function () {
-        document.querySelector("#password").addEventListener("keyup", dom.checkStrength);
+        let password = document.querySelector("#password");
+        if (password!=null)
+         document.querySelector("#password").addEventListener("keyup", dom.checkStrength);
     },
     addModalValidation: function () {
         $(document).ready(function () {
+            let $inputForm = $("#inputForm");
 
-            $("#inputForm").validate({
-                rules: {
-                    username: {
-                        required: true,
-                        minlength: 6
+          //  $("#inputForm").validate({
+            if ($inputForm.length) {
+                $inputForm.validate({
+                    rules: {
+                        username: {
+                            required: true,
+                            minlength: 6
+                        },
+                        password: "required",
+                        email: "required"
                     },
-                    password: "required",
-                    email: "required"
-                },
-                messages: {
-                    username: {
-                        required: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Please enter your user name!</span>',
-                        minlength: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Your user name must be at least 6 characters!</span>'
-                    },
-                    password: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Please enter your password!</span>',
-                    email: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Please enter a valid email address!</span>'
-                }
+                    messages: {
+                        username: {
+                            required: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Please enter your user name!</span>',
+                            minlength: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Your user name must be at least 6 characters!</span>'
+                        },
+                        password: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Please enter your password!</span>',
+                        email: '<span class="hide block-help text-danger"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Please enter a valid email address!</span>'
+                    }
 
-            });
-
+                });
+            }
         });
     },
     addToCart: function (event) {
@@ -188,23 +196,26 @@ export let dom = {
         });
     },
     showLoggedIn: function () {
-        let username = sessionStorage.getItem("username");
-        let register = document.querySelector("#register");
-        let login = document.querySelector("#login");
-        let logout = document.querySelector("#logout");
         let navbar = document.querySelector("#navbar-text");
-        let welcome = document.querySelector("#welcome");
-        if (username) {
-            navbar.style.display = 'inline';
-            navbar.innerHTML = '<b>' + username + '</b>!';
-            register.style.display = 'none';
-            login.style.display = 'none';
-            logout.style.display = 'block';
-        } else {
-            welcome.style.display = 'none';
-            register.style.display = 'block';
-            login.style.display = 'block';
-            logout.style.display = 'none';
+        if (navbar) {
+            let username = sessionStorage.getItem("username");
+            let register = document.querySelector("#register");
+            let login = document.querySelector("#login");
+            let logout = document.querySelector("#logout");
+
+            let welcome = document.querySelector("#welcome");
+            if (username) {
+                navbar.style.display = 'inline';
+                navbar.innerHTML = '<b>' + username + '</b>!';
+                register.style.display = 'none';
+                login.style.display = 'none';
+                logout.style.display = 'block';
+            } else {
+                welcome.style.display = 'none';
+                register.style.display = 'block';
+                login.style.display = 'block';
+                logout.style.display = 'none';
+            }
         }
     },
     logout: function () {
