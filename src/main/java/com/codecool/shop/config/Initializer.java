@@ -18,7 +18,7 @@ public class Initializer implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        DataBaseHandler.setPropertyFile("connection.properties");
+        DataBaseHandler.setDatabase("connection.properties");
 //        ProductDao productDataStore = new ProductDaoJDBC();
 //        ProductCategoryDao productCategoryDataStore = new ProductCategoryDaoJDBC();
 //        SupplierDao supplierDataStore = new SupplierDaoJDBC();

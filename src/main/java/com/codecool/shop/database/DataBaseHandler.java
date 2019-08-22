@@ -1,8 +1,6 @@
 package com.codecool.shop.database;
 
-import java.awt.*;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,13 +10,13 @@ import java.util.Properties;
 
 public class DataBaseHandler {
 
-    private static String propertyFile;
-    private static String DATABASE;
     private static String DB_USER = System.getenv("DB_USER");
     private static String DB_PASSWORD = System.getenv("PASSWORD");
-    private static String DB_URL = "jdbc:postgresql://localhost:5432/" + DATABASE;
+    private static String DATABASE;
+    private static String DB_URL;
 
     public static Connection getConnection() throws SQLException {
+        System.out.println(DB_URL);
         return DriverManager.getConnection(
                 DB_URL,
                 DB_USER,
@@ -36,11 +34,7 @@ public class DataBaseHandler {
         }
     }
 
-    public static void setPropertyFile(String propertyFile) {
-        DataBaseHandler.propertyFile = propertyFile;
-    }
-
-    public static void setDatabaseName() {
+    public static void setDatabase(String propertyFile) {
         try {
             Properties props = new Properties();
             FileInputStream in = new FileInputStream("src/main/resources/"+propertyFile);
@@ -48,6 +42,7 @@ public class DataBaseHandler {
             in.close();
 
             DATABASE = props.getProperty("database");
+            DB_URL = props.getProperty("url") + DATABASE;
 
         } catch (IOException e) {
             e.printStackTrace();
