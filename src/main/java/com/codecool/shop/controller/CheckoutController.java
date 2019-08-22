@@ -36,7 +36,10 @@ public class CheckoutController extends HttpServlet {
 
         if (order != null) {
             if(order.getStatus().equals(Status.CHECKED)) userdata = deliveryDetailsStore.find(order.getId());
-            else userdata = customerDetailsStore.find(USER_ID);
+            else {
+                userdata = customerDetailsStore.find(USER_ID);
+                userdata = userdata == null ? new Userdata() : userdata;
+            }
 
             TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
             WebContext context = new WebContext(req, resp, req.getServletContext());
