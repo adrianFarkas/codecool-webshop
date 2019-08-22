@@ -193,14 +193,15 @@ export let dom = {
         let login = document.querySelector("#login");
         let logout = document.querySelector("#logout");
         let navbar = document.querySelector("#navbar-text");
+        let welcome = document.querySelector("#welcome");
         if (username) {
             navbar.style.display = 'inline';
-            navbar.innerHTML = 'Welcome <b>' + username + '</b>!';
+            navbar.innerHTML = '<b>' + username + '</b>!';
             register.style.display = 'none';
             login.style.display = 'none';
             logout.style.display = 'block';
         } else {
-            navbar.style.display = 'none';
+            welcome.style.display = 'none';
             register.style.display = 'block';
             login.style.display = 'block';
             logout.style.display = 'none';

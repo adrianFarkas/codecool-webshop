@@ -19,24 +19,27 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
-@WebServlet(urlPatterns = {"/edit-details"})
+@WebServlet(urlPatterns = {"/details"})
 public class UserEditDetailsController extends HttpServlet {
     private CustomerDetailsDaoJDBC customerDetailStore = new CustomerDetailsDaoJDBC();
     private AddressDaoJDBC addressDataStore = new AddressDaoJDBC();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int USER_ID = (int) req.getSession().getAttribute("USER_ID");
-        Userdata userdata = customerDetailStore.find(USER_ID);
-        boolean isSameAddress = true;
-        if(userdata == null) userdata = new Userdata();
-        else isSameAddress = checkSameAddresses(userdata.getBillingAddress(), userdata.getShippingAddress());
+        Integer USER_ID = (Integer) req.getSession().getAttribute("USER_ID");
+        if (USER_ID == null) resp.sendRedirect("/");
+        else {
+            Userdata userdata = customerDetailStore.find(USER_ID);
+            boolean isSameAddress = true;
+            if (userdata == null) userdata = new Userdata();
+            else isSameAddress = checkSameAddresses(userdata.getBillingAddress(), userdata.getShippingAddress());
 
-        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
-        WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("userDetails", userdata);
-        context.setVariable("isSameAddress", isSameAddress);
-        engine.process("/product/edit_personal_details.html", context, resp.getWriter());
+            TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+            WebContext context = new WebContext(req, resp, req.getServletContext());
+            context.setVariable("userDetails", userdata);
+            context.setVariable("isSameAddress", isSameAddress);
+            engine.process("/product/edit_personal_details.html", context, resp.getWriter());
+        }
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

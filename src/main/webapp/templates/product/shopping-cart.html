@@ -25,6 +25,7 @@
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- End of Bootstrap components -->
 
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
     <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
@@ -34,6 +35,9 @@
 <div class="jumbotron text-center">
     <h1>Shopping Cart</h1>
 </div>
+
+<div th:replace="user_navbar.html :: usernavbar"></div>
+
 <table id="cart" class="table table-hover table-condensed" th:if="${!items.isEmpty()}">
     <thead>
     <tr>

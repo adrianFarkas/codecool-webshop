@@ -27,17 +27,20 @@
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- End of Bootstrap components -->
 
-
-
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/checkout-form.css"/>
     <script type="module" src="/static/js/main.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
 </div>
+
+<div th:replace="user_navbar.html :: usernavbar"></div>
+
 <div class="container wrapper align-items-center">
 
     <div class="row ">
@@ -136,8 +139,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div>
                     <div class="checkout-button">
                         <a href="/shopping-cart" class="btn btn-warning col-md-2"><i class="fa fa-angle-left"></i>
                             Back to cart</a>
