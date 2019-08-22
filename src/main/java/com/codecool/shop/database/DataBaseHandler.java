@@ -16,7 +16,6 @@ public class DataBaseHandler {
     private static String DB_URL;
 
     public static Connection getConnection() throws SQLException {
-        System.out.println(DB_URL);
         return DriverManager.getConnection(
                 DB_URL,
                 DB_USER,
