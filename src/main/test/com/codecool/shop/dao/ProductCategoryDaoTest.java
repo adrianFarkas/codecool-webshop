@@ -13,7 +13,7 @@ class ProductCategoryDaoTest {
     private ProductCategoryDaoJDBC productCategoryDataStore = new ProductCategoryDaoJDBC();
 
     @BeforeAll
-    private static void setup() {
+    private static void init() {
         DataBaseHandler.setDatabase("test.properties");
     }
 
@@ -35,7 +35,7 @@ class ProductCategoryDaoTest {
 
     @Test
     @Order(4)
-    void testFindCategoryNotFounded() {
+    void testCategoryNotFounded() {
         assertNull(productCategoryDataStore.find(-1));
     }
 

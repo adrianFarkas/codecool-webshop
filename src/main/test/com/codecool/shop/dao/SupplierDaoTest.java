@@ -13,7 +13,7 @@ class SupplierDaoTest {
     private SupplierDaoJDBC supplierDaoDataStore =  new SupplierDaoJDBC();
 
     @BeforeAll
-    static void setup(){
+    static void init(){
         DataBaseHandler.setDatabase("test.properties");
     }
 
