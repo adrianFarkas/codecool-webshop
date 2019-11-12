@@ -1,0 +1,169 @@
+.fa-stack[data-count]:after{
+    position:absolute;
+    right: 0;
+    top:0;
+    content: attr(data-count);
+    font-size:40%;
+    padding:.6em;
+    border-radius:999px;
+    line-height:.75em;
+    color: #3e7c3e;
+    text-align:center;
+    min-width:2em;
+    font-weight:bold;
+    background: white;
+    border-style:solid;
+}
+.fa-circle {
+    color:#5cb85c;
+}
+
+.cart {
+    color: #5cb85c;
+    background:white;
+}
+
+.shopping_cart_icon {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.card {
+    margin-bottom: 15px;
+}
+
+.jumbotron {
+    background-image: url("/static/img/header.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    color: #d2d2d2;
+    text-shadow: 2px 2px 6px #000000;
+}
+.jumbotron h1 {
+    font-size: 40px;
+}
+
+.footer {
+    margin-top: 100px;
+}
+
+.empty-cart {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: black;
+}
+
+.img-responsive {
+    width: 100px;
+    height: 100px;
+}
+
+.product {
+    width: 50%;
+}
+
+.quantity {
+    width: 8%;
+}
+
+.price, .edit {
+    width: 10%;
+}
+
+.subtotal {
+    width: 22%;
+}
+
+.filter {
+    margin-bottom: 20px;
+}
+
+
+.billing-address-label, .shipping-address-label{
+    font-weight: bold;
+}
+
+.checkout-input-field {
+    width: 400px;
+}
+
+.checkout-input {
+    margin-bottom: 15px;
+}
+.checkout-label{
+    margin-bottom: 5px;
+}
+
+.checkout-shipping-address{
+    font-size: unset;
+    width:100%
+}
+
+.checkout-main-user-data, .checkout-billing-address, .checkout-shipping-address{
+    margin: auto;
+
+}
+
+.checkout-button, .main-page-button {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.not-found {
+    padding: 20px;
+}
+
+.modal-content  {
+    -webkit-border-radius: 20px !important;
+    -moz-border-radius:20px !important;
+    border-radius: 20px !important;
+}
+
+.modal-header {
+    border-top-left-radius : 20px !important;
+    border-top-right-radius : 20px !important;
+    color: #fff;
+}
+
+.navbar {
+    border-radius: 5px;
+    margin-bottom: 50px;
+    margin-top: -32px;
+    background-image: url("/static/img/back_ground.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    font-family: Arial, Helvetica, sans-serif; !important;
+    font-weight: bold;
+}
+
+#navbar-text:hover {
+    color: #5cb85c;
+}
+
+.navbar .btn:focus {
+    outline: none; !important;
+    box-shadow: none;
+}
+
+.navbar .btn {
+    padding: unset;
+}
+
+#logout:hover, #login a:hover, #register a:hover {
+    color: #959595;
+}
+
+.fa-cc-amex {
+    color: #007bc1;
+}
+
+.fa-cc-mastercard {
+    color: #0a3a82;
+}
+
+.fa-cc-visa {
+    color: #0157a2;
+}

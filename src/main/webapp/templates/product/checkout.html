@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Codecool Shop</title>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/checkout-form.css"/>
+    <script type="module" src="/static/js/main.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="jumbotron text-center">
+    <h1>Codecool Shop</h1>
+</div>
+
+<div th:replace="user_navbar.html :: usernavbar"></div>
+
+<div class="container wrapper align-items-center">
+
+    <div class="row ">
+        <div class="container ">
+            <form action="/checkout" method="post" class="checkout-form">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Checkout</div>
+                        <div class="panel-body">
+                            <div class="col-md-12">
+                                <h5>Please enter your details below to complete to your purchase</h5>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <strong>Name:</strong>
+                                    <input type="text" name="name" class="form-control" th:value="${userdata.getName()}" required/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12"><strong>Email Address:</strong></div>
+                                <div class="col-md-12"><input type="text" name="email_address" class="form-control"
+                                                              th:value="${userdata.getEmail()}" required/></div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12"><strong>Phone Number:</strong></div>
+                                <div class="col-md-12"><input type="text" name="phone_number" class="form-control" th:value="${userdata.getPhoneNumber()}">
+                                </div>
+                                <div class="col-md-12"><br>
+                                    <h4>Billing Address</h4>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>Country:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" name="billing-country" th:value="${userdata.getBillingAddress().getCountry()}"
+                                               required/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>City:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="text" name="billing-city" class="form-control" th:value="${userdata.getBillingAddress().getCity()}" required/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>Zip / Postal Code:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="number" name="billing-zipcode" class="form-control" th:value="${userdata.getBillingAddress().getZipCode()}"
+                                               required/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>Address:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="text" name="billing-address" class="form-control" th:value="${userdata.getBillingAddress().getAddress()}"
+                                               required/>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12"><input type="checkbox" name="cb" class="checkout-checkbox"
+                                                              th:checked="${sameAddress==true} ? 'checked'">Shipping
+                                    address is the same as my billing address
+                                </div>
+                            </div>
+                            <div class="checkout-shipping-address">
+                                <div class="col-md-12"><br>
+                                    <h4>Shipping Address</h4>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>Country:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control shipping" name="shipping-country"
+                                               th:value="${userdata.getShippingAddress().getCountry()}"
+                                               required/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>City:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="text" name="shipping-city" class="form-control shipping" th:value="${userdata.getShippingAddress().getCity()}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>Zip / Postal Code:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="number" name="shipping-zipcode" class="form-control shipping"
+                                               th:value="${userdata.getShippingAddress().getZipCode()}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12"><strong>Address:</strong></div>
+                                    <div class="col-md-12">
+                                        <input type="text" name="shipping-address" class="form-control shipping"
+                                               th:value="${userdata.getShippingAddress().getAddress()}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="checkout-button">
+                        <a href="/shopping-cart" class="btn btn-warning col-md-2"><i class="fa fa-angle-left"></i>
+                            Back to cart</a>
+                        <button type="submit" name="submit" class="btn btn-success btn-block pull-right col-md-2">
+                            Pay <i class="fa fa-angle-right"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="footer.html :: copy"></div>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Codecool" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Shopping Cart</title>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+                integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+    <script type="module" src="/static/js/main.js" defer></script>
+</head>
+<body>
+<div class="jumbotron text-center">
+    <h1>Shopping Cart</h1>
+</div>
+
+<div th:replace="user_navbar.html :: usernavbar"></div>
+
+<table id="cart" class="table table-hover table-condensed" th:if="${!items.isEmpty()}">
+    <thead>
+    <tr>
+        <th class="product">Product</th>
+        <th class="price">Price</th>
+        <th class="quantity">Quantity</th>
+        <th class="text-center subtotal">Subtotal</th>
+        <th class="edit"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="item" th:each="item: ${items}" th:data-prod-id="${item.key.id}">
+        <td data-th="Product">
+            <div class="row">
+                <div class="col-sm-2 hidden-xs">
+                    <img src="http://placehold.it/100x100" th:attr="src='/static/img/product_' + ${item.key.id} + '.jpg'" alt="" class="img-responsive"/></div>
+                <div class="col-sm-10">
+                    <h4 class="nomargin" th:text="${item.key.getName()}">Product 1</h4>
+                    <p th:text="${item.key.getDescription()}">Lorem ipsum</p>
+                </div>
+            </div>
+        </td>
+        <td data-th="Price" th:text="'$'+ ${item.key.getDefaultPrice()}">$1.99</td>
+        <td data-th="Quantity">
+            <input type="number" class="form-control text-center quantity-num" th:data-current-num="${item.value}" th:value="${item.value}">
+        </td>
+        <td data-th="Subtotal" class="text-center subtotal-num" th:text="'$' + ${#numbers.formatDecimal((item.key.getDefaultPrice() * item.value), 0, 1)}">1.99</td>
+        <td class="actions" data-th="">
+            <button class="btn btn-info btn-sm refresh"><i class="fa fa-refresh refresh"></i></button>
+            <button class="btn btn-danger btn-sm remove"><i class="fa fa-trash-o remove"></i></button>
+        </td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td><a href="/" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+        <td colspan="2" class="hidden-xs"></td>
+        <td class="hidden-xs text-center"><strong class="total" th:text="'Total $' + ${#numbers.formatDecimal(total, 0, 1)}"></strong></td>
+        <td><a href="/checkout" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+    </tr>
+    </tfoot>
+</table>
+
+<div class="empty-cart" th:if="${items.isEmpty()}">
+    <img src="/static/img/empty-cart.png" alt=""><br>
+    <a href="/">Don't miss out on great deals!</a> Start shopping.
+</div>
+
+<div th:replace="footer.html :: copy"></div>
+</body>
+</html>
