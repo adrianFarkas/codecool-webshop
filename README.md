@@ -15,6 +15,6 @@ If want to try the site with all the functionalities you need to log in.
 
 Test user:
 
-  Username: guest1
-  
-  Password: Qwertz$1
+Username: guest1
+
+Password: Qwertz$1
